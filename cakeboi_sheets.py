@@ -4,6 +4,7 @@ import gspread
 # authentication packages, for "Login"
 from oauth2client.service_account import ServiceAccountCredentials
 
+
 # Subroutine to find position of target cell.
 def get_position(worksheet):
     """
@@ -27,12 +28,13 @@ def get_position(worksheet):
 
 
 def verify():
-    scope = ["https://spreadsheets.google.com/feeds",
-             'https://www.googleapis.com/auth/spreadsheets',
-             "https://www.googleapis.com/auth/drive.file",
-             "https://www.googleapis.com/auth/drive"]
+    scope = [
+        'https://www.googleapis.com/auth/spreadsheets',
+        "https://www.googleapis.com/auth/drive.file",
+        "https://www.googleapis.com/auth/drive",
+        "https://spreadsheets.google.com/feeds"]
 
-    return ServiceAccountCredentials.from_json_keyfile_name("config/creds.json", scope)
+    return ServiceAccountCredentials.from_json_keyfile_name("config/credentials.json", scope)
 
 
 # main routine
@@ -45,7 +47,6 @@ if __name__ == '__main__':
 
     # get position of "today cell"
     (row, col) = get_position(worksheet)
-
 
     # TODO
     img_list = ["Image1", "Image2", "Image3", "Image4", "Image5", "Image6", ]  # ... bis 9 Links
