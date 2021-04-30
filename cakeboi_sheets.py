@@ -43,7 +43,7 @@ if __name__ == '__main__':
     user = gspread.authorize(verify())
 
     # Worksheet (Reference)
-    worksheet = user.open("Discord Cakeboi").sheet1  # Open the spreadsheet
+    worksheet = user.open("CakeboiSheet").sheet1  # Open the spreadsheet
 
     # get position of "today cell"
     (row, col) = get_position(worksheet)
