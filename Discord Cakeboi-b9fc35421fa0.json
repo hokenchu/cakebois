@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "discord-cakeboi",
+  "private_key_id": "b9fc35421fa08f97a680b20d163d4fcabd69dbb2",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCrj3IqukEDExUi\nzL/VLSMphOZpsE+hIHmURLMetjFsV/VvDg6sBRpvIzEOCf0NSTLNQqL4oZMMzENL\nTPV219yEA4WEIxGBMVKHuGS3WvW61gTo4stw1EsJMHPa5jeDXvDCDWmsW3db82Lq\nigDnhQg5QKP2QdmSCynwrNmVQDtRXwxzOm3ZlT+ADzHFQ0fcmQ7VY9PWD0wOqTkm\n59aNd8lSw4uhatULLqmUQSKV2TwrVM6YwzjN+tLMRssB6dMJ77AM4fq45rljfUAU\nd/x5/EJHL4YePikzT0w/ACLsI5sCkeMl4K0E5cexuk1jiPBHBXQQiasGm32+v8HO\nLohvcm7rAgMBAAECggEATh/giXyPpmrGMTa0FMudO4b9thtH58P2GYK/XrjxALl9\nVrk8DTG1u+52pEIALlCrBbXWqQpLAIT0EBJXpWrfTG6eGnItwntHbe6WTrjpNc/I\nJJVCt3q1QNYDrCcyGGzfjj61ZHuyevj2jn+RsdxuxkOdZsLN5SeYTbUo0EKTwJWc\n5Y+gjn23JsAcfazPos7Ta3OgZiB1gxGUgWXvwsJ7gI7KxiYeeurTuiYyZ8fqmdEL\nCHGcH17PGI6xbR2mp0F/S6bsfNv6U+lmAa8colgK5NMad+bOPxYSkL/zDIleld4r\n0O9nk+b8Ab+9icWY1pXyYayqumx28sgWX7ejjzuBwQKBgQDcX+PTB0rG6V6rpDfn\nTDDX2RYGG26h/faHeayaam4z+k8CE6YxZ7rocVWUdhY8eR9GMu3grJPbqme5oMSb\n92EKHt9qZegMjXYHKwn4i+cIELvg5Riyvs0bvDwOVEYGmsVW+NMqF7yvSjgThpOS\nPkfy31/Ya4HDKzgmggUtDkxH4wKBgQDHS2YyzenwIHUjBXsejTHqG5Hys7k8ENfS\nsX/ZNclmp8xzI9/X0Vme2cA/vTLM5l20X2lcPU6MbZ3KN/HjADvDbY/khvBW/S4m\nUp632S5mz3/VBy1wXZ6wOrCPDDaOwCUx1z7qfDfz/kbWp6U6G7DV16b0RgOnkvRm\nOAmf8a2bWQKBgQCWr0qMpVPQJwqAus0u7r4HGX0ht+gyBAFqKRyIiXXJPMKBXQYq\nig8XmUc3OHeD6h4kVfapxddkQGSkXPWS39gOn4WMrxm4W5H03Mz4klDrBuYwpPX6\nYtTEvjUiZyVqprGBAqsBATIXedxWHZMSUFvKCkrzJK+Z0BeY3RbE9B3cmQKBgQCv\nYjE8AG4hPc8X1Nj2l/cXONAFsBgRPhlQd5g1RNpKltybbzSsLrYZzzMaZJvyKcDI\n3TZRUDpx5n132ifqRuhRIXgB+qZDR2d3njnDPUNSgsTSahCY1Cq0l9GM8YiJs5qH\n9A6QOGTdOiaI/Nuw+XFznuZ0DbFlpTOjSSlfMkY/cQKBgEwfTgpX0boTty0+qNze\nDVK0R0yFnkYmaCI/Q98/85Et6g+9sONb3dvmDex6ir27bZjmD4cqqKh8JYUmG5Yg\n+oeGdjxiVA44ezYKUytNOwvX2xNn5f024EeT8WYLZPj5aVUmbnZce+jqQ6SPvw2s\ni8/MfH681A/Fbd7vKFCKd0sV\n-----END PRIVATE KEY-----\n",
+  "client_email": "cakeboi@discord-cakeboi.iam.gserviceaccount.com",
+  "client_id": "110510174226460121806",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cakeboi%40discord-cakeboi.iam.gserviceaccount.com"
+}
