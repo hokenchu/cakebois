@@ -4,6 +4,7 @@ from utility.files import *
 # !help
 async def command_help(message):
     command_list = """```
+!waifu
 !upload n
 !purge n
     
