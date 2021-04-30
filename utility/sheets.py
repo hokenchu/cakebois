@@ -34,7 +34,7 @@ def verify():
         "https://www.googleapis.com/auth/drive",
         "https://spreadsheets.google.com/feeds"]
 
-    return ServiceAccountCredentials.from_json_keyfile_name("config/credentials.json", scope)
+    return ServiceAccountCredentials.from_json_keyfile_name("../config/credentials.json", scope)
 
 
 # main routine
