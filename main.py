@@ -1,12 +1,12 @@
 # Work with Python 3.6
 import discord
 from discord.ext import tasks
+from utility.commands import *
 
 # Initial setup
 TOKEN = 'ODM3Njc1OTQ4MzQ5ODQ5NjQx.YIwAhQ.Wvc3LwhUfhkS4Qvk_cp-8H5x8iI'
 client = discord.Client()
 bot_channel = None
-TMP_FOLDER = r"./tmp"
 
 @client.event
 async def on_ready():
@@ -59,40 +59,10 @@ async def on_message(message):
         return
 
     if message.content.startswith('!purge'):
-        await message.channel.purge(limit=100)
+        await command_purge(message)
 
     if message.content.startswith('!upload'):
-        latest_messages = await bot_channel.history(
-            limit=12).flatten()
-        # Increase limit to compensate for user error
-
-        print(latest_messages)
-        # TODO filter older messages
-
-        for msg in latest_messages:
-            if msg.content.startswith("Guild:"):  # TODO Voraussetzung
-                print(">> You fought against ", msg.content.replace('Guild', '').replace(':', ""))  # TODO name filtern
-
-            if msg.content in ["win", "victory", "defeat", "lose"]:
-                print(">> Lul, you ", msg.content)
-
-            if len(msg.attachments) > 0:
-                print(">> ", 'You sent some pictures')
-
-    if message.content.startswith('!save'):
-        await save_all(message)
-
-
-async def save(attachment):
-    filepath = f"{TMP_FOLDER}/{attachment.filename}"
-    print("[Log]", f"[{filepath}] Saving...")
-    await attachment.save(filepath)
-    print("[Log]", f"[{filepath}] Complete.")
-
-
-async def save_all(message):
-    for att in message.attachments:
-        await save(att)
+        await command_upload(message)
 
 
 if __name__ == '__main__':
