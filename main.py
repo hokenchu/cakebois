@@ -1,5 +1,6 @@
 # Work with Python 3.6
 import discord
+from utility.playground import my_function as do_stuff
 
 TOKEN = 'ODM3Njc1OTQ4MzQ5ODQ5NjQx.YIwAhQ.Wvc3LwhUfhkS4Qvk_cp-8H5x8iI'
 
@@ -38,8 +39,8 @@ async def on_message(message):
         msg = "Hello {0.author.mention}".format(message)
         await message.channel.send(msg)
 
-
-# def save_locally(file):
+    if message.content.startswith('!test'):
+        await do_stuff(message)
 
 
 # Do not touch this. Starts the bot
