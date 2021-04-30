@@ -12,6 +12,16 @@ async def on_message(message):
     if message.author == client.user:
         return
 
+    if message.guild.id != 837676563583336458:
+        print(f"From somewhere far away")
+        return
+
+    if message.channel.id != 837676563583336461:
+        print("Wrong channel, bro")
+        return
+
+    print(f"[new message] {message.guild.name} > {message.channel.name} > {message.author}")
+
     if message.content.startswith('!hello'):
         msg = "Hello {0.author.mention}".format(message)
         await message.channel.send(msg)
