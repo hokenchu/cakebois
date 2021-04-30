@@ -2,11 +2,11 @@
 import discord
 from discord.ext import tasks
 
+# Initial setup
 TOKEN = 'ODM3Njc1OTQ4MzQ5ODQ5NjQx.YIwAhQ.Wvc3LwhUfhkS4Qvk_cp-8H5x8iI'
-
 client = discord.Client()
-bot_channel = None;
-
+bot_channel = None
+TMP_FOLDER = r"./tmp"
 
 @client.event
 async def on_ready():
@@ -17,12 +17,12 @@ async def on_ready():
     print('>', f"[{bot_channel.guild}] \"{bot_channel.name}\" (id:{bot_channel.id})")
 
     print("Initiating Purging Task")
-    loop_purge.start(3600) # inactive time in seconds
+    loop_purge.start(3600)  # inactive time in seconds
 
     print('---------------')
 
 
-@tasks.loop(seconds=3600) # frequency of checks
+@tasks.loop(seconds=3600)  # frequency of checks
 async def loop_purge(inactivity_time):
     history = await bot_channel.history(limit=100).flatten()
     if len(history) == 0:
@@ -33,7 +33,7 @@ async def loop_purge(inactivity_time):
 
     last = history[0].created_at.timestamp()
     now = datetime.today().astimezone(pytz.timezone('UTC')).timestamp() - 7200
-    print("[Log]", f"Last message was {now - last} seconds ago")
+    print("[Info]", f"Last message was {now - last} seconds ago")
     if now - last > inactivity_time:
         await bot_channel.purge()
         print("[Log]", f"Purged {bot_channel}")
@@ -52,7 +52,7 @@ async def on_message(message):
         return
 
     # Info im Terminal wenn jemand eine Nachricht schreibt
-    print(f"[new message] {message.guild.name} > {message.channel.name or 'DM'} > {message.author}")
+    print(f"[Info] New message in {message.guild.name}>{message.channel.name or 'DM'}>{message.author}")
 
     if message.guild.id != 837676563583336458 or message.channel.id != 837676563583336461:
         print(f"[Info] Wrong channel, bro")
@@ -79,12 +79,21 @@ async def on_message(message):
             if len(msg.attachments) > 0:
                 print(">> ", 'You sent some pictures')
 
-
     if message.content.startswith('!save'):
-        for attachment in message.attachments:
-            print(attachment.filename)
-            await attachment.save(f"./resources/{attachment.filename}")
+        await save_all(message)
 
 
-# Do not touch this. Starts the bot
-client.run(TOKEN)
+async def save(attachment):
+    filepath = f"{TMP_FOLDER}/{attachment.filename}"
+    print("[Log]", f"[{filepath}] Saving...")
+    await attachment.save(filepath)
+    print("[Log]", f"[{filepath}] Complete.")
+
+
+async def save_all(message):
+    for att in message.attachments:
+        await save(att)
+
+
+if __name__ == '__main__':
+    client.run(TOKEN)
