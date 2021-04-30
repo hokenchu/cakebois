@@ -1,15 +1,17 @@
-# cakebois
+# Cakeboi
 
-Discord shit
+Discord slave
 
-## HELLLOOO KENYYYYY <3
+## Notizen
 
-![gretel](resources/waifu.png)
+* Discord appID: 837675948349849641
+* public key: 9b35b19a640fca258d61c0471f2c8428efb478423db7727f47816e78f01e6641
 
-Discord appID: 837675948349849641
-public key: 9b35b19a640fca258d61c0471f2c8428efb478423db7727f47816e78f01e6641
-
+## to-do
 
 Was soll der Discord bot machen?
+- Discord informationen interperetirn
 - Dateien aus Discord in drive hochladen
 - 
+
+![gretel](waifus/waifu.png)

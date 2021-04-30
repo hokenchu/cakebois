@@ -64,6 +64,11 @@ async def on_message(message):
     if message.content.startswith('!upload'):
         await command_upload(message)
 
+    if message.content.startswith('!help'):
+        await command_help(message)
+
+    if message.content.startswith('!waifu'):
+        await message.channel.send(file=discord.File(r"./waifus/waifu.png"))
 
 if __name__ == '__main__':
     client.run(TOKEN)

@@ -3,18 +3,17 @@ from utility.files import *
 
 # !help
 async def command_help(message):
-    commandList = """
-    ```
-    all commands:
-        !command --help
-        !command -h
-        !command ?
+    command_list = """```
+!upload n
+!purge n
     
-    !upload n
-    !purge n
-    """
+in general:
+    !command --help
+    !command -h
+    !command ?
+```"""
 
-    await message.channel.send(commandList)
+    await message.channel.send(command_list)
 
 
 # !purge n
@@ -46,19 +45,7 @@ async def command_upload(message):
         return
 
     latest_messages = await message.channel.history(
-        limit=int(args[1])+1).flatten()
+        limit=int(args[1]) + 1).flatten()
 
     for msg in latest_messages:
         await save_all(msg)
-
-    # TODO filter older messages
-
-    # for msg in latest_messages:
-    #     if msg.content.startswith("Guild:"):  # TODO Voraussetzung
-    #         print(">> You fought against ", msg.content.replace('Guild', '').replace(':', ""))  # TODO name filtern
-    #
-    #     if msg.content in ["win", "victory", "defeat", "lose"]:
-    #         print(">> Lul, you ", msg.content)
-    #
-    #     if len(msg.attachments) > 0:
-    #         print(">> ", 'You sent some pictures')

@@ -1,7 +1,12 @@
+import os
+
 TMP_FOLDER = r"./tmp"
 
 
 async def save(attachment, path=TMP_FOLDER):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
     filepath = f"{path}/{attachment.filename}"
     print("[Log]", f"[{filepath}] Saving...")
     await attachment.save(filepath)
@@ -9,12 +14,8 @@ async def save(attachment, path=TMP_FOLDER):
 
 
 async def save_all(message):
-    import os
     from datetime import date
-
     album = f'{TMP_FOLDER}/{date.today().strftime("%y-%m-%d")}'
-    if not os.path.exists(album):
-        os.makedirs(album)
 
     for att in message.attachments:
         await save(att, album)
