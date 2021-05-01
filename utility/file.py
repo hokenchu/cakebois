@@ -3,6 +3,7 @@ import os
 TMP_FOLDER = r"./tmp"
 
 
+@PendingDeprecationWarning
 async def save(attachment, path=TMP_FOLDER):
     if not os.path.exists(path):
         os.makedirs(path)
@@ -13,6 +14,7 @@ async def save(attachment, path=TMP_FOLDER):
     print("[Log]", f"[{filepath}] Complete.")
 
 
+@PendingDeprecationWarning
 async def save_all(message):
     from datetime import date
     album = f'{TMP_FOLDER}/{date.today().strftime("%y-%m-%d")}'

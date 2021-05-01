@@ -1,4 +1,5 @@
-from utility.files import *
+from utility import sheets_api
+from utility.file import *
 
 
 # !help
@@ -50,3 +51,22 @@ async def command_upload(message):
 
     for msg in latest_messages:
         await save_all(msg)
+
+
+async def command_transfer(message):
+    args = message.content.split()
+    if len(args) != 2 or not args[1].isnumeric():
+        return
+
+    links = []
+    latest_messages = await message.channel.history(
+        limit=int(args[1]) + 1).flatten()
+
+    for msg in latest_messages:
+        for attachment in msg.attachments:
+            links.append(attachment.url)
+
+    links.reverse() # reverse order
+    print("[Log]", f"Collected {len(links)} links from {len(latest_messages)} messages")
+    sheets_api.upload_link_batch(links)
+    print("[Log]", f"Transfer complete")

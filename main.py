@@ -10,6 +10,12 @@ bot_channel = None
 
 @client.event
 async def on_ready():
+    """
+    Things to do when bot goes online and is ready.
+
+    Shows some basic information and tries to start all tasks
+    :return:
+    """
     print('Logged in as')
     print('>', f"{client.user.name} (id:{client.user.id})")
     global bot_channel
@@ -23,7 +29,15 @@ async def on_ready():
 
 
 @tasks.loop(seconds=3600)  # frequency of checks
-async def loop_purge(inactivity_time):
+async def loop_purge(inactivity_time=3600):
+    """
+    Check every 3600 seconds if there has been a message lately.
+    (Default 1 hour)
+
+    If not, purges last 100 messages.
+    :param inactivity_time:
+    :return:
+    """
     history = await bot_channel.history(limit=100).flatten()
     if len(history) == 0:
         return
@@ -39,8 +53,16 @@ async def loop_purge(inactivity_time):
         print("[Log]", f"Purged {bot_channel}")
 
 
+
 @client.event
 async def on_message(message):
+    """
+    Check which commands to listen to.
+
+    Implement actual commands in utility.commands.py
+    :param message:
+    :return:
+    """
     global bot_channel
     # we do not want the bot to reply to itself
     if message.author == client.user:
@@ -52,7 +74,7 @@ async def on_message(message):
         return
 
     # Info im Terminal wenn jemand eine Nachricht schreibt
-    print(f"[Info] New message in {message.guild.name}>{message.channel.name or 'DM'}>{message.author}")
+    print(f"[Info] New message in {message.guild.name}>{message.channel.name or 'DM'}>{message.author} '{message.content[:80]}'")
 
     if message.guild.id != 837676563583336458 or message.channel.id != 837676563583336461:
         print(f"[Info] Wrong channel, bro")
@@ -69,6 +91,9 @@ async def on_message(message):
 
     if message.content.startswith('!waifu'):
         await message.channel.send(file=discord.File(r"./waifus/waifu.png"))
+
+    if message.content.startswith('!transfer'):
+        await command_transfer(message)
 
 if __name__ == '__main__':
     client.run(TOKEN)
