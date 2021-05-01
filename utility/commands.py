@@ -34,6 +34,11 @@ async def command_purge(message):
 
 # !upload n
 async def command_upload(message):
+    """
+    Uploads message attachments to the drive
+    :param message:
+    :return:
+    """
     args = message.content.split()
 
     if len(args) > 1 and args[1] in ["--help", "-h", "?"]:
@@ -70,3 +75,4 @@ async def command_transfer(message):
     print("[Log]", f"Collected {len(links)} links from {len(latest_messages)} messages")
     sheets_api.upload_link_batch(links)
     print("[Log]", f"Transfer complete")
+    await message.channel.send(f"Transfer completed (Sent `{len(links)}` attachments)")

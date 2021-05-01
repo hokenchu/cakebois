@@ -95,5 +95,8 @@ async def on_message(message):
     if message.content.startswith('!transfer'):
         await command_transfer(message)
 
+    if message.content in ["ping", "!ping", "hello", "!hello"]:
+        await message.channel.send(f"Was :eyes:, {message.author.mention}")
+
 if __name__ == '__main__':
     client.run(TOKEN)
