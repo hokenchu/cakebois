@@ -24,7 +24,15 @@ def get_drive():
 
 def left_over():
     drive = None
-    # file1 = drive.CreateFile({'title': "FolderTODAY",
+    """
+    Create folder
+    { META-DATA } (information that doesnt affect the file content)
+    'title' : filename
+    'parents': parent file (folder)
+    'mimeType': file "type"
+    """
+    # CREATE FOLDER
+    #       file1 = drive.CreateFile({'title': "FolderTODAY",
     #                              "parents": [{"id": id}],
     #                              "mimeType": "application/vnd.google-apps.folder"})
 

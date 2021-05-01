@@ -1,6 +1,9 @@
 # Work with Python 3.6
 import discord
+import gspread
 from discord.ext import tasks
+from oauth2client.service_account import ServiceAccountCredentials
+
 from utility.commands import *
 
 # Initial setup
@@ -92,11 +95,51 @@ async def on_message(message):
     if message.content.startswith('!waifu'):
         await message.channel.send(file=discord.File(r"./waifus/waifu.png"))
 
-    if message.content.startswith('!transfer'):
-        await command_transfer(message)
-
     if message.content in ["ping", "!ping", "hello", "!hello"]:
         await message.channel.send(f"Was :eyes:, {message.author.mention}")
+
+    if message.content.startswith('!transfer'):
+        args = message.content.split()
+        if len(args) != 2 or not args[1].isnumeric():
+            return
+
+        links = []
+        latest_messages = await message.channel.history(
+            limit=int(args[1]) + 1).flatten()
+
+        for msg in latest_messages:
+            for attachment in msg.attachments:
+                links.append(attachment.url)
+
+        links.reverse()  # reverse order
+        print("[Log]", f"Collected {len(links)} links from {len(latest_messages)} messages")
+
+        scope = [
+        'https://www.googleapis.com/auth/spreadsheets',
+        "https://www.googleapis.com/auth/drive.file",
+        "https://www.googleapis.com/auth/drive",
+        "https://spreadsheets.google.com/feeds"]
+
+        svc_cred = ServiceAccountCredentials.from_json_keyfile_name("config/discord_cakeboi.json", scope)
+
+        user = gspread.authorize(svc_cred)
+        print("[Log]", "[sheets_api.py]", "Successfully authorized Google Spreadsheets")
+
+        # Open the spreadsheet
+        # First sheet of "CakeboiSheet"
+        worksheet = user.open("CakeboiSheet").sheet1
+
+        from datetime import date
+
+        cell_of_today = date.today().strftime("%a-%d-%b")
+        row = worksheet.find(cell_of_today).row
+        col = worksheet.find(cell_of_today).col
+        for (index, link) in enumerate(links, start=1):
+            print("[Log]", "[sheets_api.py]", f"Updated cell at (Col{col + index}|Row{row}): {link}")
+            worksheet.update_cell(row, col + index, f"=IMAGE(\"{link}\")")
+
+        print("[Log]", f"Transfer complete")
+        await message.channel.send(f"Transfer completed (Sent `{len(links)}` attachments)")
 
 if __name__ == '__main__':
     client.run(TOKEN)
