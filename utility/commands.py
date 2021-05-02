@@ -20,7 +20,8 @@ in general:
 
 # !purge n
 async def command_purge(message):
-    args = message.content.split()
+    args = message.content.split() #!transfer ?
+
     if len(args) > 1 and (args[1] in ["--help", "-h", "?"]):
         await message.channel.send("```Purges the last <n> messages. (Not counting the command itself)"
                                    "\n\nUsage: !purge n```")

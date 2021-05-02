@@ -11,6 +11,7 @@ TOKEN = 'ODM3Njc1OTQ4MzQ5ODQ5NjQx.YIwAhQ.Wvc3LwhUfhkS4Qvk_cp-8H5x8iI'
 client = discord.Client()
 bot_channel = None
 
+
 @client.event
 async def on_ready():
     """
@@ -56,7 +57,6 @@ async def loop_purge(inactivity_time=3600):
         print("[Log]", f"Purged {bot_channel}")
 
 
-
 @client.event
 async def on_message(message):
     """
@@ -77,7 +77,8 @@ async def on_message(message):
         return
 
     # Info im Terminal wenn jemand eine Nachricht schreibt
-    print(f"[Info] New message in {message.guild.name}>{message.channel.name or 'DM'}>{message.author} '{message.content[:80]}'")
+    print(
+        f"[Info] New message in {message.guild.name}>{message.channel.name or 'DM'}>{message.author} '{message.content[:80]}'")
 
     if message.guild.id != 837676563583336458 or message.channel.id != 837676563583336461:
         print(f"[Info] Wrong channel, bro")
@@ -98,48 +99,34 @@ async def on_message(message):
     if message.content in ["ping", "!ping", "hello", "!hello"]:
         await message.channel.send(f"Was :eyes:, {message.author.mention}")
 
-    if message.content.startswith('!transfer'):
-        args = message.content.split()
+    if message.content.startswith('!transfer'):  # !transfer ?
+        # python split strings
+        args = (message.content).split()  # ["!transfer", "10"]
         if len(args) != 2 or not args[1].isnumeric():
             return
 
-        links = []
-        latest_messages = await message.channel.history(
-            limit=int(args[1]) + 1).flatten()
+        list_of_links = []  # links ist ne liste
+        # letzte X nachrichten holen
+        latest_message = message.channel.history(limit=9)
+        latest_messages = await message.channel.history(limit=int(args[1]) + 1).flatten()
+
+        # for schleife
+        # fuer jedes <msg> in DIESER LISTE:
+        #       tue folgendes
 
         for msg in latest_messages:
-            for attachment in msg.attachments:
-                links.append(attachment.url)
+            for att in msg.attachments:
+                list_of_links.append(att.url)
 
-        links.reverse()  # reverse order
-        print("[Log]", f"Collected {len(links)} links from {len(latest_messages)} messages")
+        list_of_links.reverse()  # reverse order
+        print("[Log]", f"Collected {len(list_of_links)} links from {len(latest_messages)} messages")
 
-        scope = [
-        'https://www.googleapis.com/auth/spreadsheets',
-        "https://www.googleapis.com/auth/drive.file",
-        "https://www.googleapis.com/auth/drive",
-        "https://spreadsheets.google.com/feeds"]
+        # HIER
+        from Sandbox import meine_funktion
+        meine_funktion(list_of_links)
+        await message.channel.send(f"Transfer completed (Sent `{len(list_of_links)}` attachments)")
 
-        svc_cred = ServiceAccountCredentials.from_json_keyfile_name("config/discord_cakeboi.json", scope)
 
-        user = gspread.authorize(svc_cred)
-        print("[Log]", "[sheets_api.py]", "Successfully authorized Google Spreadsheets")
-
-        # Open the spreadsheet
-        # First sheet of "CakeboiSheet"
-        worksheet = user.open("CakeboiSheet").sheet1
-
-        from datetime import date
-
-        cell_of_today = date.today().strftime("%a-%d-%b")
-        row = worksheet.find(cell_of_today).row
-        col = worksheet.find(cell_of_today).col
-        for (index, link) in enumerate(links, start=1):
-            print("[Log]", "[sheets_api.py]", f"Updated cell at (Col{col + index}|Row{row}): {link}")
-            worksheet.update_cell(row, col + index, f"=IMAGE(\"{link}\")")
-
-        print("[Log]", f"Transfer complete")
-        await message.channel.send(f"Transfer completed (Sent `{len(links)}` attachments)")
 
 if __name__ == '__main__':
     client.run(TOKEN)
