@@ -1,13 +1,17 @@
 # Work with Python 3.6
+from datetime import datetime, timedelta
+
 import discord
+import gspread
 from discord.ext import tasks
+from oauth2client.service_account import ServiceAccountCredentials
+
 from utility.commands import *
 
 # Initial setup
 TOKEN = 'ODM3Njc1OTQ4MzQ5ODQ5NjQx.YIwAhQ.Wvc3LwhUfhkS4Qvk_cp-8H5x8iI'
 client = discord.Client()
 bot_channel = None
-
 
 @client.event
 async def on_ready():
@@ -93,13 +97,31 @@ async def on_message(message):
     # await message.channel.purge(limit=int(args[1]) + 1)
 
     # !comments Das ist ein kommentar
+
     if message.content.startswith('!comment'):
         text = message.content
         text = text[9:]
 
-        await message.channel.send(text)
+        datum = datetime.today() - timedelta(hours=21)
+        print(datum)
+        datum = datum.strftime("%a-%d-%b")
 
+        await message.channel.send("Comment for the " + "**" +datum + "**" + " will be " +"\"" + text + "\"")
 
+        scope = ['https://www.googleapis.com/auth/spreadsheets',
+                 "https://www.googleapis.com/auth/drive.file",
+                 "https://www.googleapis.com/auth/drive",
+                 "https://spreadsheets.google.com/feeds"]
+
+        cred = ServiceAccountCredentials.from_json_keyfile_name("config/discord_cakeboi.json", scope)
+        user = gspread.authorize(cred)
+
+        # Worksheet (Reference)
+        worksheet = user.open_by_key("1QPtUaV95DvA-25uokOo1qpf_58OPUkOTBRpwML_Yh48").sheet1  # Open the spreadsheet
+
+        cell = worksheet.find(datum)  # gefundene celle mit dem datum
+        worksheet.update_cell(cell.row, cell.col + 1, text)  # update mit "text"
+        return
 
     if message.content.startswith('!purge'):
         await command_purge(message)

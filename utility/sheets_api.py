@@ -56,7 +56,7 @@ def upload_link_batch(links):
 
     # Open the spreadsheet
     # First sheet of "CakeboiSheet"
-    worksheet = user.open("CakeboiSheet").sheet1
+    worksheet = user.open_by_key("1QPtUaV95DvA-25uokOo1qpf_58OPUkOTBRpwML_Yh48").sheet1
 
     (row, col) = get_position(worksheet)
     for (index, link) in enumerate(links, start=1):
