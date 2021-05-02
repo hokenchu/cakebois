@@ -4,7 +4,7 @@ import gspread
 # authentication packages, for "Login"
 from oauth2client.service_account import ServiceAccountCredentials
 
-from utility.read_config import get
+from cakeboi.prototype import read_config
 
 # Subroutine to find position of target cell.
 def get_position(worksheet):
@@ -49,7 +49,7 @@ def upload_link_batch(links):
     :param links: list of file/image links
     :return:
     """
-    cred_file = get("credentials")
+    cred_file = read_config.get("credentials")
     svc_cred = get_service_credentials(cred_file)
     user = gspread.authorize(svc_cred)
     print("[Log]", "[local.py]", "Successfully authorized Google Spreadsheets")
