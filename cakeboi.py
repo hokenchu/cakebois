@@ -1,15 +1,21 @@
 # Work with Python 3.6
 import discord
-import gspread
 from discord.ext import tasks
-from oauth2client.service_account import ServiceAccountCredentials
 
 from utility.commands import *
 
 # Initial setup
 TOKEN = 'ODM3Njc1OTQ4MzQ5ODQ5NjQx.YIwAhQ.Wvc3LwhUfhkS4Qvk_cp-8H5x8iI'
-client = discord.Client()
+
 bot_channel = None
+client = None
+
+
+def run():
+    global client
+    client = discord.Client()
+    client.run(TOKEN)
+    print("hello")
 
 
 @client.event
@@ -30,6 +36,7 @@ async def on_ready():
     loop_purge.start(3600)  # inactive time in seconds
 
     print('---------------')
+
 
 
 @tasks.loop(seconds=3600)  # frequency of checks
@@ -107,7 +114,10 @@ async def on_message(message):
 
         list_of_links = []  # links ist ne liste
         # letzte X nachrichten holen
-        latest_message = message.channel.history(limit=9)
+        latest_message = message.channel
+        msgs = await message.channel.history(limit=9).flatten()
+        print(msgs[0].attachments[0])
+
         latest_messages = await message.channel.history(limit=int(args[1]) + 1).flatten()
 
         # for schleife
@@ -125,8 +135,3 @@ async def on_message(message):
         from Sandbox import meine_funktion
         meine_funktion(list_of_links)
         await message.channel.send(f"Transfer completed (Sent `{len(list_of_links)}` attachments)")
-
-
-
-if __name__ == '__main__':
-    client.run(TOKEN)
