@@ -80,6 +80,26 @@ async def on_message(message):
         print(f"[Info] Wrong channel, bro")
         return
 
+
+    # args = message.content.split()
+    # if len(args) > 1 and (args[1] in ["--help", "-h", "?"]):
+    #     await message.channel.send("```Purges the last <n> messages. (Not counting the command itself)"
+    #                                "\n\nUsage: !purge n```")
+    #     return
+    #
+    # if len(args) != 2 or not args[1].isnumeric():
+    #     await message.channel.send("```Usage: !purge n```")
+    #     return
+    # await message.channel.purge(limit=int(args[1]) + 1)
+
+    # !comments Das ist ein kommentar
+    if message.content.startswith('!comment'):
+        text = message.author
+        print("[KENNY NEWS]" + str(text))
+
+        await message.channel.send(text)
+        # send_comment_to_sheet(text) # <- sheet oeffnen, zelle suchen, update
+
     if message.content.startswith('!purge'):
         await command_purge(message)
 
