@@ -8,6 +8,7 @@ TOKEN = 'ODM3Njc1OTQ4MzQ5ODQ5NjQx.YIwAhQ.Wvc3LwhUfhkS4Qvk_cp-8H5x8iI'
 client = discord.Client()
 bot_channel = None
 
+
 @client.event
 async def on_ready():
     """
@@ -53,7 +54,6 @@ async def loop_purge(inactivity_time=3600):
         print("[Log]", f"Purged {bot_channel}")
 
 
-
 @client.event
 async def on_message(message):
     """
@@ -74,12 +74,12 @@ async def on_message(message):
         return
 
     # Info im Terminal wenn jemand eine Nachricht schreibt
-    print(f"[Info] New message in {message.guild.name}>{message.channel.name or 'DM'}>{message.author} '{message.content[:80]}'")
+    print(
+        f"[Info] New message in {message.guild.name}>{message.channel.name or 'DM'}>{message.author} '{message.content[:80]}'")
 
     if message.guild.id != 837676563583336458 or message.channel.id != 837676563583336461:
         print(f"[Info] Wrong channel, bro")
         return
-
 
     # args = message.content.split()
     # if len(args) > 1 and (args[1] in ["--help", "-h", "?"]):
@@ -94,11 +94,12 @@ async def on_message(message):
 
     # !comments Das ist ein kommentar
     if message.content.startswith('!comment'):
-        text = message.author
-        print("[KENNY NEWS]" + str(text))
+        text = message.content
+        text = text[9:]
 
         await message.channel.send(text)
-        # send_comment_to_sheet(text) # <- sheet oeffnen, zelle suchen, update
+
+
 
     if message.content.startswith('!purge'):
         await command_purge(message)
@@ -117,6 +118,7 @@ async def on_message(message):
 
     if message.content in ["ping", "!ping", "hello", "!hello"]:
         await message.channel.send(f"Was :eyes:, {message.author.mention}")
+
 
 if __name__ == '__main__':
     client.run(TOKEN)

@@ -10,7 +10,7 @@ Discord slave
 ## to-do
 
 Was soll der Discord bot machen?
-- Discord informationen interperetirn
+- Discord informationen interpretieren
 - Dateien aus Discord in drive hochladen
 - 
 
