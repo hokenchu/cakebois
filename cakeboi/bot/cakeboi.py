@@ -9,7 +9,6 @@ from cakeboi.bot import commands
 __TOKEN = 'ODM3Njc1OTQ4MzQ5ODQ5NjQx.YIwAhQ.Wvc3LwhUfhkS4Qvk_cp-8H5x8iI'
 client = discord.Client()
 __BOT_CHANNEL = None
-__PREFIX = '!'
 
 
 def run():
@@ -62,8 +61,6 @@ async def loop_purge(inactivity_time=3600):
 
 @client.event
 async def on_message(message):
-    global __PREFIX
-
     if message.author == client.user:
         # we do not want the bot to reply to itself
         return
@@ -81,17 +78,10 @@ async def on_message(message):
         print(f"[Info] Wrong channel, bro")
         return
 
-    if message.content.startswith(f'{__PREFIX}prefix'):
-        if len(message.content.split()) == 2:
-            __PREFIX = message.content.split()[1]
-            await message.channel.send(f"Prefix changed to `{__PREFIX}`")
-        else:
-            await message.channel.send(f"`{__PREFIX}prefix !`")
-        return
-
-    if message.content.startswith(__PREFIX):
+    if message.content.startswith(commands.get_prefix()):
         await commands.cmd(message)
 
-    if message.content in ["ping", f"{__PREFIX}ping", "hello", f"{__PREFIX}hello"]:
+    if message.content in ["ping", f"{commands.get_prefix()}ping",
+                           "hello", f"{commands.get_prefix()}hello"]:
         await message.channel.send(f"Was :eyes:, {message.author.mention}")
         return

@@ -5,37 +5,31 @@ from oauth2client.service_account import ServiceAccountCredentials
 from cakeboi.util.common import local
 from cakeboi.util.sheets import helper
 
-cmd_dict = {
-    "comment"
-}
+__PREFIX = '!'
+
 
 async def cmd(message):
-    print("[Log]", "[commands.py]", "Command detected")
+    cmd_text = message.content.split()[0]
 
+    cmd_dict = {
+        "help": cmd_help,
+        "purge": upload,
+        "transfer": transfer,
+        "comment": comment,
+        "waifu": waifu,
+        "prefix": prefix
 
-    return
-    if message.content.startswith('!comment'):
-        await comment(message)
+    }
 
-    if message.content.startswith('!purge'):
-        await purge(message)
-
-    if message.content.startswith('!upload'):
-        await upload(message)
-
-    if message.content.startswith('!help'):
-        await help(message)
-
-    if message.content.startswith('!waifu'):
-        await message.channel.send(file=discord.File(r"./waifus/waifu.png"))
-
-    if message.content.startswith('!transfer'):
-        await transfer(message)
+    cmd_func = cmd_dict.get(cmd_text.replace(__PREFIX, ""))
+    if cmd_func is not None:
+        print("[Log]", "[commands.py]", f"Executing {cmd_func}()")
+        await cmd_func(message)
     return
 
 
 # !help
-async def help(message):
+async def cmd_help(message):
     command_list = """```
 !waifu
 !upload n
@@ -150,3 +144,20 @@ async def comment(message):
     worksheet.update_cell(cell.row, cell.col + 1, text)  # update mit "text"
     return
 
+
+async def waifu(message):
+    await message.channel.send(file=discord.File(r"../waifus/waifu.png"))
+
+
+async def prefix(message):
+    global __PREFIX
+    if len(message.content.split()) == 2:
+        __PREFIX = message.content.split()[1]
+        await message.channel.send(f"Prefix changed to `{__PREFIX}`")
+    else:
+        await message.channel.send(f"`Current prefix is `{__PREFIX}`")
+    return
+
+
+def get_prefix():
+    return __PREFIX
