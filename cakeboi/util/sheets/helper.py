@@ -52,7 +52,7 @@ def upload_link_batch(links):
     cred_file = get("credentials")
     svc_cred = get_service_credentials(cred_file)
     user = gspread.authorize(svc_cred)
-    print("[Log]", "[sheets_api.py]", "Successfully authorized Google Spreadsheets")
+    print("[Log]", "[local.py]", "Successfully authorized Google Spreadsheets")
 
     # Open the spreadsheet
     # First sheet of "CakeboiSheet"
@@ -60,5 +60,5 @@ def upload_link_batch(links):
 
     (row, col) = get_position(worksheet)
     for (index, link) in enumerate(links, start=1):
-        print("[Log]", "[sheets_api.py]", f"Updated cell at (Col{col + index}|Row{row}): {link}")
+        print("[Log]", "[local.py]", f"Updated cell at (Col{col + index}|Row{row}): {link}")
         worksheet.update_cell(row, col + index, f"=IMAGE(\"{link}\")")

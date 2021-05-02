@@ -1,5 +1,5 @@
-from utility import sheets_api
-from utility.file import *
+from cakeboi.util.common import local
+from cakeboi.util.sheets import helper
 
 
 # !help
@@ -14,9 +14,7 @@ in general:
     !command -h
     !command ?
 ```"""
-
     await message.channel.send(command_list)
-
 
 
 # !purge n
@@ -31,7 +29,8 @@ async def command_purge(message):
     if len(args) != 2 or not args[1].isnumeric():
         await message.channel.send("```Usage: !purge n```")
         return
-     await message.channel.purge(limit=int(args[1]) + 1)
+
+    await message.channel.purge(limit=int(args[1]) + 1)
 
 
 # !upload n
@@ -57,7 +56,7 @@ async def command_upload(message):
         limit=int(args[1]) + 1).flatten()
 
     for msg in latest_messages:
-        await save_all(msg)
+        await local.save_all(msg)
 
 
 async def command_transfer(message):
@@ -73,8 +72,8 @@ async def command_transfer(message):
         for attachment in msg.attachments:
             links.append(attachment.url)
 
-    links.reverse() # reverse order
+    links.reverse()  # reverse order
     print("[Log]", f"Collected {len(links)} links from {len(latest_messages)} messages")
-    sheets_api.upload_link_batch(links)
+    helper.upload_link_batch(links)
     print("[Log]", f"Transfer complete")
     await message.channel.send(f"Transfer completed (Sent `{len(links)}` attachments)")

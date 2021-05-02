@@ -6,7 +6,7 @@ import gspread
 from discord.ext import tasks
 from oauth2client.service_account import ServiceAccountCredentials
 
-from utility.commands import *
+from utility.discord.commands import *
 
 # Initial setup
 TOKEN = 'ODM3Njc1OTQ4MzQ5ODQ5NjQx.YIwAhQ.Wvc3LwhUfhkS4Qvk_cp-8H5x8iI'
@@ -63,7 +63,7 @@ async def on_message(message):
     """
     Check which commands to listen to.
 
-    Implement actual commands in utility.commands.py
+    Implement actual commands in cakeboi.commands.py
     :param message:
     :return:
     """
@@ -113,7 +113,7 @@ async def on_message(message):
                  "https://www.googleapis.com/auth/drive",
                  "https://spreadsheets.google.com/feeds"]
 
-        cred = ServiceAccountCredentials.from_json_keyfile_name("config/discord_cakeboi.json", scope)
+        cred = ServiceAccountCredentials.from_json_keyfile_name("../prototype/config/discord_cakeboi.json", scope)
         user = gspread.authorize(cred)
 
         # Worksheet (Reference)
