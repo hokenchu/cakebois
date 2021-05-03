@@ -20,7 +20,7 @@ async def cmd(message):
         "purge": purge,
         "transfer": transfer,
         "comment": comment,
-        "upload": None,
+        "save": save_locally, # FIXME allow saving locally?
         "waifu": waifu,
         "prefix": prefix
     }
@@ -121,7 +121,7 @@ async def comment(message):
     datum = datetime.today() - timedelta(hours=21)
     datum = datum.strftime("%a-%d-%b")
 
-    await message.channel.send("Comment for the " + "**" + datum + "**" + " will be " + "\"" + text + "\"")
+    await message.channel.send("Comment for the **" + datum + "**" + " will be " + "\"" + text + "\"")
 
     sheets_user = SheetsUser(channel_id=message.channel.id)
     sheets_user.comment(text)

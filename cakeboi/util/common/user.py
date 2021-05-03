@@ -3,9 +3,11 @@ import json
 # This needs to run when
 # from cakeboi.util.common.user import GoogleUser
 # is run
-with open(r'subscriber_list.json') as f:
+PATH_TO_SUB_LIST = r'subscriber_list.json'
+with open(PATH_TO_SUB_LIST) as f:
     subscriber_list = json.load(f)
-    print("Loaded user list")
+    print(f"Loaded user list from {PATH_TO_SUB_LIST}")
+
 
 class GoogleUser:
     def __init__(self, name=None, channel_id=None, sheet_id=None):

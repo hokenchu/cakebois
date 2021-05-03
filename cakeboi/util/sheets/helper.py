@@ -5,7 +5,7 @@ import gspread
 # authentication packages, for "Login"
 from oauth2client.service_account import ServiceAccountCredentials
 
-from cakeboi.prototype import read_config
+
 from cakeboi.util.common.user import GoogleUser
 
 
