@@ -21,10 +21,6 @@ DEFAULT_GET_FIELDS = "nextPageToken, files(id, name, mimeType, parents, createdT
 class DriveUser:
     def __init__(self, name=None, channel_id=None, drive_id=None):
         GoogleUser.__init__(self, name=name, channel_id=channel_id, drive_id=drive_id)
-        self.name = name
-        self.channel_id = channel_id
-        self.drive_id = drive_id
-
         self.service = login()
 
     def upload(self, path_list=[], parent_id=None):
