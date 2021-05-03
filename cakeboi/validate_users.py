@@ -1,0 +1,1 @@
+# Validates subscriber_list.json

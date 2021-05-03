@@ -81,7 +81,12 @@ async def on_message(message):
     if message.content.startswith(commands.get_prefix()):
         await commands.cmd(message)
 
-    if message.content in ["ping", f"{commands.get_prefix()}ping",
-                           "hello", f"{commands.get_prefix()}hello"]:
+    if message.content in ["ping",
+                           f"{commands.get_prefix()}ping",
+                           "hello",
+                           f"{commands.get_prefix()}hello"]:
         await message.channel.send(f"Was :eyes:, {message.author.mention}")
         return
+
+    if "bad boy" in message.content:
+        await message.channel.send("_Ich reite diesen boesen Jungen_")
