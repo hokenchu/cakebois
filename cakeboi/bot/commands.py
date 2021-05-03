@@ -1,6 +1,7 @@
 import discord
 
 from cakeboi.util.common import local
+from cakeboi.util.drive.helper import DriveUser
 from cakeboi.util.sheets.helper import SheetsUser
 
 __PREFIX = '!'
@@ -98,6 +99,19 @@ async def upload(message):
 
     await message.channel.send(f"Saved {len(all_files)} files locally")
 
+    user = DriveUser(channel_id=message.channel.id)
+    folder = user.create_folder()
+    file_list = user.upload(path_list=all_files,parent_id=folder['id'])
+
+    await message.channel.send(f"Uploaded {len(all_files)} files to {folder['name']}")
+    link_list = []
+    for f in file_list:
+        link_list.append(f'=IMAGE("https://drive.google.com/uc?id={f["id"]}"')
+    user = SheetsUser(channel_id=message.channel.id)
+    user.upload(list_of_links=link_list)
+
+    await message.channel.send(f"Sent {len(link_list)} images to {user.sheet_id}")
+
     return
 
 
@@ -117,8 +131,8 @@ async def transfer(message):
     links.reverse()  # reverse order
     print("[Log]", f"Collected {len(links)} links from {len(latest_messages)} messages")
 
-    sheets_user = SheetsUser(channel_id=message.channel.id)
-    sheets_user.upload(links)
+    user = SheetsUser(channel_id=message.channel.id)
+    user.upload(links)
 
     print("[Log]", f"Transfer complete")
     await message.channel.send(f"Transfer completed (Sent `{len(links)}` attachments)")

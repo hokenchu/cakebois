@@ -11,8 +11,10 @@ if args[-1] in ["Win", "win"]:
 for liste in args[1:-1]:
     print(liste)
 
-text = "path/dah\\doo/abc.def.ghi.png"
-import re
 
-file = re.split('[\\/]', text)[-1]
-name = ".".join(file.split('.')[:-1])
+
+
+a = [1,2,3,4,5]
+b = [n * 2 for n in a]
+
+print(b)

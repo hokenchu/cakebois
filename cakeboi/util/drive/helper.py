@@ -64,7 +64,8 @@ class DriveUser:
         return items
 
     def create_file(self, path, file_name=None, parent_id=None):
-        parent_id = parent_id['id'] or parent_id
+        if type(parent_id) is dict:
+            parent_id = parent_id['id']
 
         if type(parent_id) != list:
             parent_id = [parent_id]
