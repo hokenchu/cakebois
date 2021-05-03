@@ -1,7 +1,7 @@
 import json
 
 # This needs to run when
-# from cakeboi.util.common.user import GoogleUser
+# "from cakeboi.util.common.user import GoogleUser"
 # is run
 PATH_TO_SUB_LIST = r'subscriber_list.json'
 with open(PATH_TO_SUB_LIST) as f:
@@ -10,28 +10,34 @@ with open(PATH_TO_SUB_LIST) as f:
 
 
 class GoogleUser:
-    def __init__(self, name=None, channel_id=None, sheet_id=None):
+    def __init__(self, name=None, channel_id=None, sheet_id=None, drive_id=None):
+        match = None
         if name:
-            for subscriber in subscriber_list:
-                if name == subscriber["name"]:
-                    self.name = subscriber["name"]
-                    self.channel_id = subscriber["channel_id"]
-                    self.sheet_id = subscriber["sheet_id"]
+            for sub in subscriber_list:
+                if name == sub["name"]:
+                    match = sub
                     break
         elif channel_id:
             channel_id = str(channel_id)
-            for subscriber in subscriber_list:
-                if channel_id == subscriber["channel_id"]:
-                    self.name = subscriber["name"]
-                    self.channel_id = subscriber["channel_id"]
-                    self.sheet_id = subscriber["sheet_id"]
+            for sub in subscriber_list:
+                if channel_id == sub["channel_id"]:
+                    match = sub
                     break
         elif sheet_id:
-            for subscriber in subscriber_list:
-                if sheet_id == subscriber["sheet_id"]:
-                    self.name = subscriber["name"]
-                    self.channel_id = subscriber["channel_id"]
-                    self.sheet_id = subscriber["sheet_id"]
+            for sub in subscriber_list:
+                if sheet_id == sub["sheet_id"]:
+                    match = sub
                     break
-        else:
-            raise ValueError("[CRITICAL] Expected either name, channel_id or sheet_id")
+        elif drive_id:
+            for sub in subscriber_list:
+                if drive_id == sub["drive_id"]:
+                    match = sub
+                    break
+
+        if match is None:
+            raise ValueError("[CRITICAL] Expected either name, channel_id, sheet_id or drive_id")
+
+        self.name = match["name"]
+        self.channel_id = match["channel_id"]
+        self.sheet_id = match["sheet_id"]
+        self.drive_id = match["drive_id"]

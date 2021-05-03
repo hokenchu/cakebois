@@ -1,8 +1,20 @@
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 
+from cakeboi.util.common.user import GoogleUser
+
 TMP_FOLDER = r"../tmp"
 DRIVE_ROOT = "1UtB-Xzi8uFV9WP4HQ7laflXXT_bOESXs"
+
+
+class SheetsUser(GoogleUser):
+    def __init__(self, name=None, channel_id=None, drive_id=None):
+        GoogleUser.__init__(self, name=name, channel_id=channel_id, drive_id=drive_id)
+
+    def upload(self, list_of_links=[], start=1):
+        """
+        Uploads last X images from discord to Drive
+        """
 
 
 def get_drive():
