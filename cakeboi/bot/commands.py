@@ -19,9 +19,9 @@ async def cmd(message):
         "purge": purge,
         "transfer": transfer,
         "comment": comment,
-        "save": save_locally,  # FIXME allow saving locally?
         "waifu": waifu,
-        "prefix": prefix
+        "prefix": prefix,
+        "upload": upload
     }
 
     cmd_func = cmd_dict.get(cmd_text.replace(__PREFIX, ""))
@@ -62,7 +62,7 @@ async def purge(message):
     await message.channel.purge(limit=int(args[1]) + 1)
 
 
-# !upload
+# !upload n
 async def upload(message):
     """
     Uploads message attachments to the drive
@@ -85,12 +85,20 @@ async def upload(message):
 
     hist.reverse()
 
-    file_list = []
+    all_attachments = []
     for msg in hist:
-        for (index, att) in enumerate(msg.attachments, start=0):
-            file_list.append(local.save(attachment=att, filename_base=index))
+        for att in msg.attachments:
+            all_attachments.append(att)
+            print(att)
 
-    await message.channel.send(f"Saved {len(file_list)} files locally")
+    all_files = []
+    for (index, att) in enumerate(all_attachments, start=0):
+        file = await local.save(att, index, message.channel)
+        all_files.append(file)
+
+    await message.channel.send(f"Saved {len(all_files)} files locally")
+
+    return
 
 
 async def transfer(message):

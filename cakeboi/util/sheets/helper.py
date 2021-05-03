@@ -5,8 +5,19 @@ import gspread
 # authentication packages, for "Login"
 from oauth2client.service_account import ServiceAccountCredentials
 
-
 from cakeboi.util.common.user import GoogleUser
+
+
+def login(json_path="util/sheets/discord_cakeboi.json"):
+    scope = ['https://www.googleapis.com/auth/spreadsheets',
+             "https://www.googleapis.com/auth/drive.file",
+             "https://www.googleapis.com/auth/drive",
+             "https://spreadsheets.google.com/feeds"]
+
+    cred = ServiceAccountCredentials.from_json_keyfile_name(json_path, scope)
+    user = gspread.authorize(cred)
+
+    return user
 
 
 class SheetsUser(GoogleUser):
@@ -36,18 +47,6 @@ class SheetsUser(GoogleUser):
         today_cell = self.worksheet.find(today_string())
         for (step, link) in enumerate(list_of_links, start=start):
             self.update_cell(today_cell.row, today_cell.col + step, f'=IMAGE("{link}")')
-
-
-def login(json_path="util/sheets/discord_cakeboi.json"):
-    scope = ['https://www.googleapis.com/auth/spreadsheets',
-             "https://www.googleapis.com/auth/drive.file",
-             "https://www.googleapis.com/auth/drive",
-             "https://spreadsheets.google.com/feeds"]
-
-    cred = ServiceAccountCredentials.from_json_keyfile_name(json_path, scope)
-    user = gspread.authorize(cred)
-
-    return user
 
 
 def today_string():

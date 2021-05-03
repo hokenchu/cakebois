@@ -11,11 +11,34 @@ from googleapiclient.http import MediaFileUpload
 from cakeboi.util.common.user import GoogleUser
 
 # If modifying these scopes, delete the file token.json.
-TMP_FOLDER = r"../tmp"
-DRIVE_ROOT = "1UtB-Xzi8uFV9WP4HQ7laflXXT_bOESXs"
-PATH_CLIENT_JSON = r"C:\Data\Projects\Py\pythonProject\ggUtil\Goosy\gg\drive\client_secret_675181359759-h79d7ha460o2244t9gr88nrm82ol5m08.apps.googleusercontent.com.json"
 
 DEFAULT_GET_FIELDS = "nextPageToken, files(id, name, mimeType, parents, createdTime)"
+
+
+def login(cred_json=r"util/drive/client_secrets.json", token='util/drive/token.json',
+          save_token='util/drive/token.json'):
+    # The file token.json stores the user's access and refresh tokens, and is
+    # created automatically when the authorization flow completes for the first
+    # time.
+    _SCOPES = ["https://www.googleapis.com/auth/drive.file"]
+    cred = None
+
+    if os.path.exists(token):
+        cred = Credentials.from_authorized_user_file(token, _SCOPES)
+    # If there are no (valid) credentials available, let the user log in.
+    if not cred or not cred.valid:
+        if cred and cred.expired and cred.refresh_token:
+            cred.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                cred_json, _SCOPES)
+            cred = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open(save_token, 'w') as token:
+            token.write(cred.to_json())
+
+    service = build('drive', 'v3', credentials=cred)
+    return service
 
 
 class DriveUser:
@@ -40,11 +63,14 @@ class DriveUser:
             items.append(new_file)
         return items
 
-    def create_file(self, file_name=None, path=None, parent_id=None):
+    def create_file(self, path, file_name=None, parent_id=None):
         parent_id = parent_id['id'] or parent_id
 
         if type(parent_id) != list:
             parent_id = [parent_id]
+
+        if file_name is None:
+            file_name = re.split('[\\/]', path)[-1]
 
         metadata = {
             'name': file_name,
@@ -144,31 +170,7 @@ class DriveUser:
         return trashed
 
 
-def login(cred_json=PATH_CLIENT_JSON, token='token.json', save_token='token.json'):
-    _SCOPES = ["https://www.googleapis.com/auth/drive.file"]
-    cred = None
-    # The file token.json stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first
-    # time.
-    if os.path.exists(token):
-        cred = Credentials.from_authorized_user_file(token, _SCOPES)
-    # If there are no (valid) credentials available, let the user log in.
-    if not cred or not cred.valid:
-        if cred and cred.expired and cred.refresh_token:
-            cred.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                cred_json, _SCOPES)
-            cred = flow.run_local_server(port=0)
-        # Save the credentials for the next run
-        with open(save_token, 'w') as token:
-            token.write(cred.to_json())
-
-    service = build('drive', 'v3', credentials=cred)
-    return service
-
-
-if __name__ == '__main__':
+def left_over():
     user = DriveUser(drive_id="1Hhz97eIh08IlNCDR2X35_PGYX8MH5kus")
     node = user.create_folder()
     files = [r"../tmp/1.jpg", r"../tmp/2.jpg", r"../tmp/3.jpg", r"../tmp/4.png"]
