@@ -1,5 +1,3 @@
-from cakeboi.util.common.user import GoogleUser
-
 import datetime
 import os.path
 import re
@@ -9,6 +7,8 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
+
+from cakeboi.util.common.user import GoogleUser
 
 # If modifying these scopes, delete the file token.json.
 TMP_FOLDER = r"../tmp"
@@ -20,13 +20,12 @@ DEFAULT_GET_FIELDS = "nextPageToken, files(id, name, mimeType, parents, createdT
 
 class DriveUser:
     def __init__(self, name=None, channel_id=None, drive_id=None):
+        GoogleUser.__init__(self, name=name, channel_id=channel_id, drive_id=drive_id)
         self.name = name
         self.channel_id = channel_id
         self.drive_id = drive_id
-        self.service = login()
 
-    def __init__(self, name=None, channel_id=None, drive_id=None):
-        GoogleUser.__init__(self, name=name, channel_id=channel_id, drive_id=drive_id)
+        self.service = login()
 
     def upload(self, path_list=[], parent_id=None):
         """

@@ -34,6 +34,7 @@ class GoogleUser:
                     match = sub
                     break
 
+        # Remove this if you dont care about errors
         if match is None:
             raise ValueError("[CRITICAL] Expected either name, channel_id, sheet_id or drive_id")
 
