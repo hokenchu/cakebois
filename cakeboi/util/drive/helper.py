@@ -1,6 +1,3 @@
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
-
 from cakeboi.util.common.user import GoogleUser
 
 TMP_FOLDER = r"../tmp"
@@ -17,23 +14,7 @@ class SheetsUser(GoogleUser):
         """
 
 
-def get_drive():
-    gauth = GoogleAuth()
-    # gauth.LocalWebserverAuth()
-    gauth.LoadCredentialsFile(r"../config/credentials.txt")
-    if gauth.credentials is None:
-        # Authenticate if they're not there
-        gauth.LocalWebserverAuth()
-    elif gauth.access_token_expired:
-        # Refresh them if expired
-        gauth.Refresh()
-    else:
-        # Initialize the saved creds
-        gauth.Authorize()
-
-    return GoogleDrive(gauth)
-
-
+@DeprecationWarning
 def left_over():
     drive = None
     # file1 = drive.CreateFile({'title': "FolderTODAY",
