@@ -3,7 +3,17 @@ import os
 TMP_FOLDER = r"../tmp"
 
 
-async def save(attachment, path=TMP_FOLDER):
+async def save(attachment, filename_base, path=TMP_FOLDER):
+    ext = attachment.filename.split('.')[-1]
+    filename = f"{filename_base}.{ext}"
+    filepath = f"{path}/filename"
+    print(f"Saving [{filepath}]")
+    await attachment.save(filepath)
+    return filename
+
+
+@DeprecationWarning
+async def save_copy(attachment, path=TMP_FOLDER):
     if not os.path.exists(path):
         os.makedirs(path)
 
@@ -24,6 +34,7 @@ async def save(attachment, path=TMP_FOLDER):
     print("[Log]", f"[{filepath}] Complete.")
 
 
+@DeprecationWarning
 async def save_all(message):
     from datetime import datetime
     today = datetime.today()

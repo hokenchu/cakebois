@@ -1,7 +1,6 @@
 import discord
 
 from cakeboi.util.common import local
-from cakeboi.util.sheets import helper
 from cakeboi.util.sheets.helper import SheetsUser
 
 __PREFIX = '!'
@@ -20,7 +19,7 @@ async def cmd(message):
         "purge": purge,
         "transfer": transfer,
         "comment": comment,
-        "save": save_locally, # FIXME allow saving locally?
+        "save": save_locally,  # FIXME allow saving locally?
         "waifu": waifu,
         "prefix": prefix
     }
@@ -63,15 +62,14 @@ async def purge(message):
     await message.channel.purge(limit=int(args[1]) + 1)
 
 
-# !upload n
-async def save_locally(message):
+# !upload
+async def upload(message):
     """
     Uploads message attachments to the drive
     :param message:
     :return:
     """
     args = message.content.split()
-
     if len(args) > 1 and args[1] in ["--help", "-h", "?"]:
         await message.channel.send(
             "```Checks the last <n> messages and uploads them to the drive. (Not counting the command itself)"
@@ -82,11 +80,17 @@ async def save_locally(message):
         await message.channel.send("```Usage: !upload n```")
         return
 
-    latest_messages = await message.channel.history(
+    hist = await message.channel.history(
         limit=int(args[1]) + 1).flatten()
 
-    for msg in latest_messages:
-        await local.save_all(msg)
+    hist.reverse()
+
+    file_list = []
+    for msg in hist:
+        for (index, att) in enumerate(msg.attachments, start=0):
+            file_list.append(local.save(attachment=att, filename_base=index))
+
+    await message.channel.send(f"Saved {len(file_list)} files locally")
 
 
 async def transfer(message):

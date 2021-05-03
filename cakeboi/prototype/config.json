@@ -1,7 +1,0 @@
-{
-  "login": "config/credentials.txt",
-  "credentials": "config/discord_cakeboi.json",
-  "client_secret": "config/client_secret_241290080805-u73r4brt7mpp3j97qh1harmmbkdhv0h1.apps.googleusercontent.com.json",
-  "tmp_folder": "tmp",
-  "drive_folder_id" : "1UtB-Xzi8uFV9WP4HQ7laflXXT_bOESXs"
-}
