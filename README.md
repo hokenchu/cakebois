@@ -23,29 +23,18 @@ Was soll der Discord bot machen?
 
 # structural notes
 1. Zuordnung von User - Sheet - Drive - Channel
-    1. ~~Base GoogleUser Class~~ **[ok]**
     2. Specialization SheetUser Class **[almost]**
        - Add "win/lose" and opponent option
-    3. Specialization DriveUser Class
-        - ~~Create folder for "today"~~ **[ok]**
-           - ~~Sub folders?~~ nah
-        - Fetch screenshots from discord
-            1. 2-steps?
-                1. Download to tmp folder
-                2. (Upload to drive)
-            2. File streams? if compatible
-        - ~~Upload to drive~~ **[ok]**
-            1. ~~Naming collision~~
-            2. ~~meta tags~~
-            3. ~~Retrieve IDs/links~~
-                - ~~pass to object?~~
-                - ~~save locally?~~
-                - ~~direct call to SheetUser? (oof)~~ **pthis]**
     4. Verify user list file
-    5. ~~Save locally~~ **[ok]**
-  
-  
+2. Missing
+    - Remove local files after upload
+    - Clear some messages after command
+    - GoogleDrive > Folder per channel
+    - Remove commands number argument
+    - Add Win/Lose/Opponent to !upload
             
 2. Commands
     1. Add user/channel/sheet/drive
     2. `...`
+    
+
