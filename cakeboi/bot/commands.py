@@ -1,8 +1,10 @@
+from datetime import datetime
+
 import discord
 
 from cakeboi.util.common import local
 from cakeboi.util.drive.helper import DriveUser
-from cakeboi.util.sheets.helper import SheetsUser
+from cakeboi.util.sheets.helper import SheetsUser, today_string
 
 __PREFIX = '!'
 
@@ -73,7 +75,7 @@ async def upload(message):
     """
     args = message.content.split()
 
-    if len(args) > 1 and (args[1] in ["--help", "-h", "?"]):
+    if len(args) == 1 or (args[1] in ["--help", "-h", "?"]):
         await message.channel.send("```Uploads the last 10 screenshots (entries) "
                                    "\nto the gdrive and sorts guildname+results+screenshots into the spreadsheet"
                                    "\n\nUsage: !upload guildname result"
@@ -118,7 +120,7 @@ async def upload(message):
     user = DriveUser(channel_id=message.channel.id)
     folder = user.create_folder()
     user.clear_folder(folder["id"])
-    file_list = user.upload(path_list=all_files,parent_id=folder['id'])
+    file_list = user.upload(path_list=all_files, parent_id=folder['id'])
 
     await message.channel.send(f"Uploaded {len(all_files)} files to {folder['name']}")
     link_list = []
@@ -128,26 +130,23 @@ async def upload(message):
     user.upload(list_of_links=link_list)
 
     await message.channel.send(f"Sent {len(link_list)} images to {user.sheet_id}")
-
     return
 
 
 async def comment(message):
     from datetime import datetime, timedelta
-#    args = message.content.split
-#    if len(args) > 1 and (args[1] in ["--help", "-h", "?"]):
-#        await message.channel.send("```Adds a text to the comment section of the spreadsheet "
-#                                   "\n\nUsage: !comment text"
-#                                   "\n\nExample: !comment We got lubed by Peanut```") #TODO
-#        return
+    args = message.content.split()
+
+    if len(args) == 1 or (args[1] in ["--help", "-h", "?"]):
+        await message.channel.send("```Adds a text to the comment section of the spreadsheet "
+                                   "\n\nUsage: !comment *text*"
+                                   "\n\nExample: !comment We got lubed by Peanut```")
+        return
 
     text = message.content
     text = text[9:]
 
-    datum = datetime.today() - timedelta(hours=21)
-    datum = datum.strftime("%a-%d-%b")
-
-    await message.channel.send("Comment for the **" + datum + "**" + " will be " + "\"" + text + "\"")
+    await message.channel.send("Comment for the **" + today_string() + "**" + " will be " + "\"" + text + "\"")
 
     sheets_user = SheetsUser(channel_id=message.channel.id)
     sheets_user.comment(text)

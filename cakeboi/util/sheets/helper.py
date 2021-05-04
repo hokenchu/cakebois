@@ -40,7 +40,8 @@ class SheetsUser(GoogleUser):
         self.update_cell(today_cell.row, today_cell.col + 13, your_text)
 
     def outcome(self, outcome='n/a'):
-        # TODO
+        today_cell = self.worksheet.find(today_string())
+        self.update_cell(today_cell.row, today_cell.col + 10, outcome)
         pass
 
     def upload(self, list_of_links=[], start=1):
@@ -53,11 +54,12 @@ class SheetsUser(GoogleUser):
             self.update_cell(today_cell.row, today_cell.col + step, f'=IMAGE("{link}")')
 
     def guildnaming(self, guild_name):
-        # TODO
+        today_cell = self.worksheet.find(today_string())
+        self.update_cell(today_cell.row, today_cell.col -1, guild_name)
         pass
 
 
 def today_string():
     """ Returns the TODAY in the right format for worksheet.find() """
-    today = datetime.today() - timedelta(hours=21)
+    today = datetime.today() - timedelta(hours=12)
     return today.strftime("%a-%d-%b")
