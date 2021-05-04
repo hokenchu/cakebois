@@ -98,7 +98,7 @@ async def upload(message):
 
     user.guildnaming(guild_name)
 
-    hist = await message.channel.history(limit=11).flatten()
+    hist = await message.channel.history(limit=10).flatten()
 
     hist.reverse()
 
