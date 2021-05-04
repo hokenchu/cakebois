@@ -52,6 +52,10 @@ class SheetsUser(GoogleUser):
         for (step, link) in enumerate(list_of_links, start=start):
             self.update_cell(today_cell.row, today_cell.col + step, f'=IMAGE("{link}")')
 
+    def guildnaming(self, guild_name):
+        # TODO
+        pass
+
 
 def today_string():
     """ Returns the TODAY in the right format for worksheet.find() """
