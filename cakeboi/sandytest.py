@@ -1,20 +1,25 @@
-input = "!entry Panda Fking Gods Win"
-
+input = "!purge"
 args = input.split()
-if args[-1] in ["Lose", "lose"]:
-    # then update worksheet cell with "Lose"
-    print()
-if args[-1] in ["Win", "win"]:
-    # then update worksheet cell with "Win"
-    print()
 
-for liste in args[1:-1]:
-    print(liste)
+print(args[0])
 
 
+#if (args[1]) == "all":
+#    await message.channel.purge(limit=1000)
+#if len(args) > 1 and (args[1] in ["--help", "-h", "?"]):
+#    await message.channel.send("```Purges the last <n> messages. (Not counting the command itself)"
+#                               "\n\nUsage: !purge n"
+#                               "\nAlternative: !purge all (this clears the whole channel)```")
+#    return
+#if len(args) != 2 or not args[1].isnumeric() or (args[0]) == "!purge":
+#    await message.channel.send("```Usage: !purge n```")
+#    return
 
 
-a = [1,2,3,4,5]
-b = [n * 2 for n in a]
+# def input_war_result(guild_name, outcome):
+#     user.update_cell(x,y, guild_name)
+#     user.update_cell(x,y+10, outcome)
 
-print(b)
+
+# comment = "We had a " + outcome
+# print(comment)

@@ -76,7 +76,6 @@ async def on_message(message):
 
     if message.guild.id != 837676563583336458 or message.channel.id != 837676563583336461:
         print(f"[Info] Wrong channel, bro")
-        return
 
     if message.content.startswith(commands.get_prefix()):
         await commands.cmd(message)

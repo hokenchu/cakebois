@@ -37,7 +37,11 @@ class SheetsUser(GoogleUser):
         Adds comment in the same row as today's date
         """
         today_cell = self.worksheet.find(today_string())
-        self.update_cell(today_cell.row, today_cell.col - 1, your_text)
+        self.update_cell(today_cell.row, today_cell.col + 13, your_text)
+
+    def outcome(self, outcome='n/a'):
+        # TODO
+        pass
 
     def upload(self, list_of_links=[], start=1):
         """
@@ -47,6 +51,10 @@ class SheetsUser(GoogleUser):
         today_cell = self.worksheet.find(today_string())
         for (step, link) in enumerate(list_of_links, start=start):
             self.update_cell(today_cell.row, today_cell.col + step, f'=IMAGE("{link}")')
+
+    def guildnaming(self, guild_name):
+        # TODO
+        pass
 
 
 def today_string():
