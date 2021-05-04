@@ -85,7 +85,7 @@ class DriveUser:
     def create_folder(self, folder_name=None, parents=None):
         if folder_name is None:
             today = datetime.datetime.today() - datetime.timedelta(hours=21)
-            folder_name = today.strftime("%Y_%m_%d")
+            folder_name = today.strftime("%a-%d-%b")
 
         if parents is None:
             parents = [self.drive_id]
