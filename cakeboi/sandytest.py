@@ -1,20 +1,14 @@
-input = "!entry Panda Fking Gods Win"
-
+input = "!upload Panda Gods DEFEAT"
 args = input.split()
-if args[-1] in ["Lose", "lose"]:
-    # then update worksheet cell with "Lose"
-    print()
-if args[-1] in ["Win", "win"]:
-    # then update worksheet cell with "Win"
-    print()
-
-for liste in args[1:-1]:
-    print(liste)
 
 
 
 
-a = [1,2,3,4,5]
-b = [n * 2 for n in a]
 
-print(b)
+# def input_war_result(guild_name, outcome):
+#     user.update_cell(x,y, guild_name)
+#     user.update_cell(x,y+10, outcome)
+
+
+# comment = "We had a " + outcome
+# print(comment)

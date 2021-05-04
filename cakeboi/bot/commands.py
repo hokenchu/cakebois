@@ -18,7 +18,6 @@ async def cmd(message):
     cmd_dict = {
         "help": cmd_help,
         "purge": purge,
-        "transfer": transfer,
         "comment": comment,
         "waifu": waifu,
         "prefix": prefix,
@@ -71,18 +70,23 @@ async def upload(message):
     :return:
     """
     args = message.content.split()
-    if len(args) > 1 and args[1] in ["--help", "-h", "?"]:
-        await message.channel.send(
-            "```Checks the last <n> messages and uploads them to the drive. (Not counting the command itself)"
-            "\n\nUsage: !upload n```")
+
+    user = SheetsUser(channel_id=message.channel.id)
+
+    if args[-1] in ["Lose", "lose"]:
+        user.outcome("Lose")
+    elif args[-1] in ["Win", "win"]:
+        user.outcome("Win")
+    else:
+        await message.channel.send("did not understand")
         return
 
-    if len(args) != 2 or not args[1].isnumeric():
-        await message.channel.send("```Usage: !upload n```")
-        return
+    separator = ' '
+    guild_name = separator.join(args[1:-1])
 
-    hist = await message.channel.history(
-        limit=int(args[1]) + 1).flatten()
+    user.guildnaming(guild_name)
+
+    hist = await message.channel.history(limit=10).flatten()
 
     hist.reverse()
 
@@ -101,41 +105,19 @@ async def upload(message):
 
     user = DriveUser(channel_id=message.channel.id)
     folder = user.create_folder()
+    user.clear_folder(folder["id"])
     file_list = user.upload(path_list=all_files,parent_id=folder['id'])
 
     await message.channel.send(f"Uploaded {len(all_files)} files to {folder['name']}")
     link_list = []
     for f in file_list:
-        link_list.append(f'=IMAGE("https://drive.google.com/uc?id={f["id"]}"')
+        link_list.append(f"https://drive.google.com/uc?export=view&id={f['id']}")
     user = SheetsUser(channel_id=message.channel.id)
     user.upload(list_of_links=link_list)
 
     await message.channel.send(f"Sent {len(link_list)} images to {user.sheet_id}")
 
     return
-
-
-async def transfer(message):
-    args = message.content.split()
-    if len(args) != 2 or not args[1].isnumeric():
-        return
-
-    links = []
-    latest_messages = await message.channel.history(
-        limit=int(args[1]) + 1).flatten()
-
-    for msg in latest_messages:
-        for attachment in msg.attachments:
-            links.append(attachment.url)
-
-    links.reverse()  # reverse order
-    print("[Log]", f"Collected {len(links)} links from {len(latest_messages)} messages")
-
-    user = SheetsUser(channel_id=message.channel.id)
-    user.upload(links)
-
-    print("[Log]", f"Transfer complete")
-    await message.channel.send(f"Transfer completed (Sent `{len(links)}` attachments)")
 
 
 async def comment(message):

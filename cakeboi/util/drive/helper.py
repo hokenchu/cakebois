@@ -167,7 +167,7 @@ class DriveUser:
         trashed = []
         for f in content:
             trashed.append(f)
-            user.delete(f)
+            self.delete(f)
         return trashed
 
 
