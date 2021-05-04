@@ -35,8 +35,9 @@ async def cmd(message):
 async def cmd_help(message):
     command_list = """```
 !waifu
-!upload n
+!upload guildname result
 !purge n
+!comment text
     
 in general:
     !command --help
@@ -53,7 +54,8 @@ async def purge(message):
         await message.channel.purge(limit=1000)
     if len(args) > 1 and (args[1] in ["--help", "-h", "?"]):
         await message.channel.send("```Purges the last <n> messages. (Not counting the command itself)"
-                                   "\n\nUsage: !purge n```")
+                                   "\n\nUsage: !purge n"
+                                   "\nAlternative: !purge all (this clears the whole channel)```")
         return
     if len(args) != 2 or not args[1].isnumeric():
         await message.channel.send("```Usage: !purge n```")
@@ -71,14 +73,24 @@ async def upload(message):
     """
     args = message.content.split()
 
+    if len(args) > 1 and (args[1] in ["--help", "-h", "?"]):
+        await message.channel.send("```Uploads the last 10 screenshots (entries) "
+                                   "\nto the gdrive and sorts guildname+results+screenshots into the spreadsheet"
+                                   "\n\nUsage: !upload guildname result"
+                                   "\n\nExample: !upload Peanut Win```")
+        return
+
     user = SheetsUser(channel_id=message.channel.id)
 
-    if args[-1] in ["Lose", "lose"]:
+    if args[-1] in ["Lose", "lose", "Defeat", "defeat"]:
         user.outcome("Lose")
-    elif args[-1] in ["Win", "win"]:
+    elif args[-1] in ["Win", "win", "Victory", "victory"]:
         user.outcome("Win")
     else:
-        await message.channel.send("did not understand")
+        await message.channel.send("Missing battle outcome! (win/lose)"
+                                   "\n\n```Example: !upload Peanut Win```"
+                                   "\n\n(*Delete this + the wrong upload "
+                                   "command message before you use !upload again)*")
         return
 
     separator = ' '
@@ -122,6 +134,12 @@ async def upload(message):
 
 async def comment(message):
     from datetime import datetime, timedelta
+#    args = message.content.split
+#    if len(args) > 1 and (args[1] in ["--help", "-h", "?"]):
+#        await message.channel.send("```Adds a text to the comment section of the spreadsheet "
+#                                   "\n\nUsage: !comment text"
+#                                   "\n\nExample: !comment We got lubed by Peanut```") #TODO
+#        return
 
     text = message.content
     text = text[9:]
