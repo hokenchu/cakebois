@@ -54,6 +54,7 @@ async def purge(message):
     args = message.content.split()
     if (args[1]) == "all":
         await message.channel.purge(limit=1000)
+        return
     if len(args) > 1 and (args[1] in ["--help", "-h", "?"]):
         await message.channel.send("```Purges the last <n> messages. (Not counting the command itself)"
                                    "\n\nUsage: !purge n"
@@ -100,9 +101,7 @@ async def upload(message):
 
     user.guildnaming(guild_name)
 
-    hist = await message.channel.history(limit=10).flatten()
-
-    hist.reverse()
+    hist = await message.channel.history(limit=9).flatten()
 
     all_attachments = []
     for msg in hist:
@@ -111,11 +110,13 @@ async def upload(message):
             print(att)
 
     all_files = []
-    for (index, att) in enumerate(all_attachments, start=0):
+    for (index, att) in enumerate(all_attachments[:9], start=0):
         file = await local.save(att, index, message.channel)
         all_files.append(file)
 
     await message.channel.send(f"Saved {len(all_files)} files locally")
+
+    all_files.reverse()
 
     user = DriveUser(channel_id=message.channel.id)
     folder = user.create_folder()
