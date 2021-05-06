@@ -9,6 +9,10 @@ with open(PATH_TO_SUB_LIST) as f:
     print(f"Loaded user list from {PATH_TO_SUB_LIST}")
 
 
+def get_subscribers():
+    return subscriber_list
+
+
 class GoogleUser:
     def __init__(self, name=None, channel_id=None, sheet_id=None, drive_id=None):
         match = None

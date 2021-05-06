@@ -159,8 +159,8 @@ class DriveUser:
             else:
                 raise ValueError
             self.service.files().delete(fileId=file_id).execute()
-        except ValueError:  # FIXME specific Exception
-            print("Received invalid parameter")
+        except ValueError as err:
+            print(err, "Received invalid parameter")
 
     def clear_folder(self, folder_id):
         content = self.get_children(parent_id=folder_id)

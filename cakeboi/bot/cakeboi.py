@@ -2,13 +2,15 @@
 
 import discord
 from discord.ext import tasks
-
+from cakeboi.util.common import user
 from cakeboi.bot import commands
 
 # Initial setup
 __TOKEN = 'ODM3Njc1OTQ4MzQ5ODQ5NjQx.YIwAhQ.VxDnLzA6Raa99UacUDtfVU6-204'
 client = discord.Client()
-__BOT_CHANNEL = None
+
+
+__SUBSCRIBER_LIST = [u['channel_id'] for u in user.get_subscribers()]
 
 
 def run():
@@ -25,11 +27,20 @@ async def on_ready():
     """
     print('Logged in as')
     print('>', f"{client.user.name} (id:{client.user.id})")
-    global __BOT_CHANNEL
-    __BOT_CHANNEL = client.get_channel(837676563583336461)
-    print('>', f"[{__BOT_CHANNEL.guild}] \"{__BOT_CHANNEL.name}\" (id:{__BOT_CHANNEL.id})")
-    print("Initiating Purging Task")
-    loop_purge.start(3600)  # inactive time in seconds
+    #    loop_purge.start(3600)  # inactive time in seconds
+
+    print("Channels in subscription:")
+    for chan_id in __SUBSCRIBER_LIST:
+        print(f"{client.get_channel(int(chan_id))} : {chan_id}")
+
+    print("Channel in use:")
+    for guild in client.guilds:
+        print(guild.name)
+        tmp = []
+        for channel in  guild.channels:
+            if type(channel) == discord.TextChannel:
+                tmp.append(channel)
+        print(tmp)
 
     print('---------------')
 
@@ -40,17 +51,27 @@ async def on_message(message):
         # we do not want the bot to reply to itself
         return
 
-    if type(message.channel) == discord.DMChannel:
-        print("Why are you whispering, bro")
-        print(f"[new message] direct message > {message.author}")
+    if type(message.channel) != discord.TextChannel:
+        """
+        Blocks direct messages
+        """
+        # print(f"[new message] direct message > {message.author}")
         return
 
-    # Info im Terminal wenn jemand eine Nachricht schreibt
+    if str(message.channel.id) not in __SUBSCRIBER_LIST:
+        """
+        Blocks from unsubscribed channels.
+        Print()s can be omitted.  
+        """
+        try:
+            # print(f"[Info][Server:{message.guild.name} > Ch:{message.channel.name} > {message.author}] no subscription")
+            pass
+        except:
+            pass
+        return  # stops here
+
     print(
         f"[Info] New message in {message.guild.name}>{message.channel.name or 'DM'}>{message.author} '{message.content[:80]}'")
-
-    if message.guild.id != 837676563583336458 or message.channel.id != 837676563583336461:
-        print(f"[Info] Wrong channel, bro")
 
     if message.content.startswith(commands.get_prefix()):
         await commands.cmd(message)
