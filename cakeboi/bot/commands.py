@@ -101,7 +101,9 @@ async def upload(message):
 
     user.guildnaming(guild_name)
 
-    hist = await message.channel.history(limit=9).flatten()
+    hist = await message.channel.history(limit=10).flatten()
+
+    hist.reverse()
 
     all_attachments = []
     for msg in hist:
@@ -110,13 +112,13 @@ async def upload(message):
             print(att)
 
     all_files = []
-    for (index, att) in enumerate(all_attachments[:9], start=0):
-        file = await local.save(att, index, message.channel)
+    for (index, att) in enumerate(all_attachments[-9:], start=1):
+        file_name = message.channel.name + f"{index}"
+        file = await local.save(att, file_name, message.channel)
         all_files.append(file)
 
     await message.channel.send(f"Saved {len(all_files)} files locally")
 
-    all_files.reverse()
 
     user = DriveUser(channel_id=message.channel.id)
     folder = user.create_folder()

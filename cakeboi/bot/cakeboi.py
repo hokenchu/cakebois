@@ -6,7 +6,7 @@ from discord.ext import tasks
 from cakeboi.bot import commands
 
 # Initial setup
-__TOKEN = 'ODM3Njc1OTQ4MzQ5ODQ5NjQx.YIwAhQ.Wvc3LwhUfhkS4Qvk_cp-8H5x8iI'
+__TOKEN = 'ODM3Njc1OTQ4MzQ5ODQ5NjQx.YIwAhQ.VxDnLzA6Raa99UacUDtfVU6-204'
 client = discord.Client()
 __BOT_CHANNEL = None
 
@@ -32,31 +32,6 @@ async def on_ready():
     loop_purge.start(3600)  # inactive time in seconds
 
     print('---------------')
-
-
-@tasks.loop(seconds=3600)  # frequency of checks
-async def loop_purge(inactivity_time=3600):
-    """
-    Check every 3600 seconds if there has been a message lately.
-    (Default 1 hour)
-
-    If not, purges last 100 messages.
-    :param inactivity_time:
-    :return:
-    """
-    history = await __BOT_CHANNEL.history(limit=100).flatten()
-    if len(history) == 0:
-        return
-
-    from datetime import datetime
-    import pytz
-
-    last = history[0].created_at.timestamp()
-    now = datetime.today().astimezone(pytz.timezone('UTC')).timestamp() - 7200
-    print("[Info]", f"Last message was {now - last} seconds ago")
-    if now - last > inactivity_time:
-        await __BOT_CHANNEL.purge()
-        print("[Log]", f"Purged {__BOT_CHANNEL}")
 
 
 @client.event
