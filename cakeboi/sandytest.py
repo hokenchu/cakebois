@@ -1,9 +1,3 @@
-input="!upload dark riders win"
-
-args = input.split()
-
-print("input")
-print(args)
-
-print(args[1:-1])
-
+a = [1,2,3,4,5,6]
+a = a[a>2]
+print(a)

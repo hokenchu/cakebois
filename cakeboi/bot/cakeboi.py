@@ -6,9 +6,8 @@ from cakeboi.util.common import user
 from cakeboi.bot import commands
 
 # Initial setup
-__TOKEN = 'ODM3Njc1OTQ4MzQ5ODQ5NjQx.YIwAhQ.VxDnLzA6Raa99UacUDtfVU6-204'
+__TOKEN = 'ODM3Njc1OTQ4MzQ5ODQ5NjQx.YIwAhQ.AQwBp6Pq6kPf5qVoVWeAUQVysAY'
 client = discord.Client()
-
 
 __SUBSCRIBER_LIST = [u['channel_id'] for u in user.get_subscribers()]
 
@@ -31,17 +30,15 @@ async def on_ready():
 
     print("Channels in subscription:")
     for chan_id in __SUBSCRIBER_LIST:
-        print(f"{client.get_channel(int(chan_id))} : {chan_id}")
+        print(f"\t{client.get_channel(int(chan_id))} : {chan_id}")
 
-    print("Channel in use:")
+    print("Active:")
     for guild in client.guilds:
-        print(guild.name)
-        tmp = []
-        for channel in  guild.channels:
-            if type(channel) == discord.TextChannel:
-                tmp.append(channel)
-        print(tmp)
-
+        text_channels = []
+        for channel in guild.channels:
+            if type(channel) is discord.channel.TextChannel:
+                text_channels.append(channel)
+        print('\t',guild.name,[channel.name for channel in sorted(text_channels, key=lambda ch: ch.position)])
     print('---------------')
 
 
