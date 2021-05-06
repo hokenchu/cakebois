@@ -38,7 +38,7 @@ async def on_ready():
         for channel in guild.channels:
             if type(channel) is discord.channel.TextChannel:
                 text_channels.append(channel)
-        print('\t',guild.name,[channel.name for channel in sorted(text_channels, key=lambda ch: ch.position)])
+        print('\t', guild.name, [channel.name for channel in sorted(text_channels, key=lambda ch: ch.position)])
     print('---------------')
 
 
