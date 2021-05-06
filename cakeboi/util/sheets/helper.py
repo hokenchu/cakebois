@@ -8,7 +8,8 @@ from oauth2client.service_account import ServiceAccountCredentials
 from cakeboi.util.common.user import GoogleUser
 
 
-def login(json_path="util/sheets/discord_cakeboi.json"):
+#def login(json_path="cakeboi/util/sheets/discord_cakeboi.json"):
+def login(json_path="cakeboi/util/sheets/discord_cakeboi.json"):
     scope = ['https://www.googleapis.com/auth/spreadsheets',
              "https://www.googleapis.com/auth/drive.file",
              "https://www.googleapis.com/auth/drive",
@@ -55,7 +56,7 @@ class SheetsUser(GoogleUser):
 
     def guildnaming(self, guild_name):
         today_cell = self.worksheet.find(today_string())
-        self.update_cell(today_cell.row, today_cell.col -1, guild_name)
+        self.update_cell(today_cell.row, today_cell.col - 1, guild_name)
         pass
 
 

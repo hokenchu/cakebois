@@ -6,7 +6,7 @@ from cakeboi.util.common import user
 from cakeboi.bot import commands
 
 # Initial setup
-__TOKEN = 'ODM3Njc1OTQ4MzQ5ODQ5NjQx.YIwAhQ.AQwBp6Pq6kPf5qVoVWeAUQVysAY'
+__TOKEN = "ODM3Njc1OTQ4MzQ5ODQ5NjQx.YIwAhQ.JnUM36Kf1-hhih40W6PzGG_Bl3U"
 client = discord.Client()
 
 __SUBSCRIBER_LIST = [u['channel_id'] for u in user.get_subscribers()]

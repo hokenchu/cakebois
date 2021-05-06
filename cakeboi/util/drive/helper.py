@@ -15,8 +15,8 @@ from cakeboi.util.common.user import GoogleUser
 DEFAULT_GET_FIELDS = "nextPageToken, files(id, name, mimeType, parents, createdTime)"
 
 
-def login(cred_json=r"util/drive/client_secrets.json", token='util/drive/token.json',
-          save_token='util/drive/token.json'):
+def login(cred_json=r"cakeboi/util/drive/client_secrets.json", token='cakeboi/util/drive/token.json',
+          save_token='cakeboi/util/drive/token.json'):
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
@@ -27,6 +27,7 @@ def login(cred_json=r"util/drive/client_secrets.json", token='util/drive/token.j
         cred = Credentials.from_authorized_user_file(token, _SCOPES)
     # If there are no (valid) credentials available, let the user log in.
     if not cred or not cred.valid:
+        print("Could not find token")
         if cred and cred.expired and cred.refresh_token:
             cred.refresh(Request())
         else:

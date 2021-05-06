@@ -3,7 +3,7 @@ import json
 # This needs to run when
 # "from cakeboi.util.common.user import GoogleUser"
 # is run
-PATH_TO_SUB_LIST = r'subscriber_list.json'
+PATH_TO_SUB_LIST = r'cakeboi/subscriber_list.json'
 with open(PATH_TO_SUB_LIST) as f:
     subscriber_list = json.load(f)
     print(f"Loaded user list from {PATH_TO_SUB_LIST}")
