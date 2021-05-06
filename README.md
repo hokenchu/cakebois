@@ -13,11 +13,10 @@ Was soll der Discord bot machen?
 1. Discord Informationen interpretieren
 2. Dateien aus Discord in drive hochladen (mit !upload)
 3. Informationen die in den Channel gepostet werden in die passenden 
-  Zellen auf dem spreadsheet hochladen (mit !entry)
-4. Soll jeden Tag den txt-Channel zeitbasierend komplett purgen
-5. Je nachdem in welchen txt-Channel (bzw Server) die Daten gepostet werden, soll
+  Zellen auf dem spreadsheet hochladen
+4. Je nachdem in welchen txt-Channel (bzw Server) die Daten gepostet werden, soll
   der Bot den dazugehörigen Spreadsheet benutzen
-6. Erstellt für jeden txt-Channel einen Ordner im Drive und für jeden Tag einen Ordner für die Info Sammlungen
+5. Erstellt für jeden txt-Channel einen Ordner im Drive und für jeden Tag einen Ordner für die Info Sammlungen
 
 
 # structural notes
