@@ -1,7 +1,7 @@
 import json
 import re
 
-JSON = r'subscriber_list.json'
+JSON = r'cakeboi/subscriber_list.json'
 
 
 def validate_objects(path=JSON, verbose=True):
@@ -82,11 +82,11 @@ def validate_layout(path=JSON, verbose=False):
         return True
 
 
-if __name__ == '__main__':
+def run():
     if validate_objects() and validate_layout():
-        print('All seems good, buddy 👌')
+        print('[Validating subscriber list] All seems good, buddy 👌')
     else:
-        print('You may want to check the code for errors\n')
+        print('[Validating subscriber list] You may want to check the code for errors\n')
         out = ""
         print("Run script to check code line by line? (Y/n)")
         while out not in ["y", "Y", "yes", "Yes", "n", "N", "no", "No"]:

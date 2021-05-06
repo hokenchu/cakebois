@@ -1,5 +1,5 @@
 import datetime
-import os.path
+import os
 import re
 
 from google.auth.transport.requests import Request
@@ -14,29 +14,26 @@ from cakeboi.util.common.user import GoogleUser
 
 DEFAULT_GET_FIELDS = "nextPageToken, files(id, name, mimeType, parents, createdTime)"
 
+# with open('cakeboi/util/drive/token.json', "r") as read_file:
+#     DRIVE_TOKEN = json.load(read_file)
 
-def login(cred_json=r"cakeboi/util/drive/client_secrets.json", token='cakeboi/util/drive/token.json',
-          save_token='cakeboi/util/drive/token.json'):
+DRIVE_TOKEN = os.getenv("DRIVE_TOKEN")
+
+
+def login(cred_json=r"cakeboi/util/drive/client_secrets.json", token=DRIVE_TOKEN):
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
     _SCOPES = ["https://www.googleapis.com/auth/drive.file"]
-    cred = None
-
-    if os.path.exists(token):
-        cred = Credentials.from_authorized_user_file(token, _SCOPES)
+    cred = Credentials.from_authorized_user_info(token, _SCOPES)
     # If there are no (valid) credentials available, let the user log in.
     if not cred or not cred.valid:
-        print("Could not find token")
         if cred and cred.expired and cred.refresh_token:
             cred.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
                 cred_json, _SCOPES)
             cred = flow.run_local_server(port=0)
-        # Save the credentials for the next run
-        with open(save_token, 'w') as token:
-            token.write(cred.to_json())
 
     service = build('drive', 'v3', credentials=cred)
     return service

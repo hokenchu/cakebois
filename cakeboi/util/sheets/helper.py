@@ -8,7 +8,6 @@ from oauth2client.service_account import ServiceAccountCredentials
 from cakeboi.util.common.user import GoogleUser
 
 
-#def login(json_path="cakeboi/util/sheets/discord_cakeboi.json"):
 def login(json_path="cakeboi/util/sheets/discord_cakeboi.json"):
     scope = ['https://www.googleapis.com/auth/spreadsheets',
              "https://www.googleapis.com/auth/drive.file",
