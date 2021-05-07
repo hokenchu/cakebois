@@ -7,6 +7,11 @@ from cakeboi.util.common import user
 from cakeboi.bot import commands
 
 # Initial setup
+if os.path.isfile(r'./token.txt'):
+    print("[Debug]", "Loading local discord bot token")
+    with open(r'./token.txt', 'r') as read_file:
+        print("[Setup]", read_file.readlines())
+
 __TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 client = discord.Client()
 

@@ -1,8 +1,18 @@
 import os
 
-TMP_FOLDER = r"../tmp"
-if not os.path.isdir(TMP_FOLDER):
-    os.makedirs(TMP_FOLDER)
+TMP_FOLDER = r"./tmp"
+import shutil
+
+if os.path.isdir(TMP_FOLDER):
+    shutil.rmtree(TMP_FOLDER)
+os.makedirs(TMP_FOLDER)
+
+
+def empty_tmp():
+    import shutil
+    shutil.rmtree(TMP_FOLDER)
+    if not os.path.isdir(TMP_FOLDER):
+        os.makedirs(TMP_FOLDER)
 
 
 def get_tmp():
