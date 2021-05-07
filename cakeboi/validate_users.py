@@ -40,7 +40,7 @@ def validate_raw(path=JSON, verbose=False):
         'head': r'^ *{$',
         '1': r'^ *"name": ".+",$',
         '2': r'^ *"channel_id": "\d{18}",$',
-        '3': r'^ *"sheet_id": "\w{44}",$',
+        '3': r'^ *"sheet_id": ".{44}",$',
         '4': r'^ *"drive_id": "\w{33}"$',
         'tail': r'^ *},$',
         'last_tail': r'^ *}$',
@@ -93,7 +93,7 @@ def run():
         print("[Info]", "[Subscriber list]",
               "\n- Names can be any characters and whitespaces"
               "\n- Channel IDs consist of 18 digits"
-              "\n- Sheet IDs consist of 44 characterss (mix of letters and numbers)"
+              "\n- Sheet IDs consist of 44 characters"
               "\n- Drive IDs consist of 33 characters (mix of letters and numbers)")
         if raw and not struct:
             print("[Debug] [Validate sub list] - If that doesnt fix it, dunno whats wrong with your list man ☹️")
