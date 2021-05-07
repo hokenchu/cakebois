@@ -77,7 +77,7 @@ def validate_raw(path=JSON, verbose=False):
                 print(f"[ln {ln}] [Success] {text.strip()}")
 
     if err_count > 0:
-        print("\n[Debug]", "[Validate sub list]", f"<{err_count}> lines are potentially wrong.\n")
+        print("[Debug]", "[Validate sub list]", f"<{err_count}> lines are potentially wrong.")
         return False
     else:
         return True

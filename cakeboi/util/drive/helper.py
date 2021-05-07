@@ -34,28 +34,6 @@ def login(cred_json=r"cakeboi/util/drive/client_secrets.json", token=None):
     token = json.load(token)
     cred = Credentials.from_authorized_user_info(token, _SCOPES)
 
-    @classmethod
-    def from_authorized_user_file(cls, filename, scopes=None):
-        """Creates a Credentials instance from an authorized user json file.
-
-        Args:
-            filename (str): The path to the authorized user json file.
-            scopes (Sequence[str]): Optional list of scopes to include in the
-                credentials.
-
-        Returns:
-            google.oauth2.credentials.Credentials: The constructed
-                credentials.
-
-        Raises:
-            ValueError: If the file is not in the expected format.
-        """
-        # with open('cakeboi/util/drive/token.json', "r") as read_file:
-        #     DRIVE_TOKEN = json.load(read_file)
-        with io.open(filename, "r", encoding="utf-8") as json_file:
-            data = json.load(json_file)
-            return cls.from_authorized_user_info(data, scopes)
-
     # If there are no (valid) credentials available, let the user log in.
     if not cred or not cred.valid:
         if cred and cred.expired and cred.refresh_token:
