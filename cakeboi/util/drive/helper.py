@@ -1,5 +1,4 @@
 import datetime
-import json
 import os
 import re
 
@@ -16,15 +15,17 @@ from cakeboi.util.common.user import GoogleUser
 DEFAULT_GET_FIELDS = "nextPageToken, files(id, name, mimeType, parents, createdTime)"
 
 __path = r'cakeboi/util/drive/token.json'
-if os.path.isfile(__path):
-    print("[Debug]", "Loading local GoogleDrive user token")
-    with open(__path, "r") as read_file:
-        DRIVE_TOKEN = json.load(read_file)
-else:
-    DRIVE_TOKEN = os.getenv("DRIVE_TOKEN")
 
 
-def login(cred_json=r"cakeboi/util/drive/client_secrets.json", token=DRIVE_TOKEN):
+def login(cred_json=r"cakeboi/util/drive/client_secrets.json", token=None):
+    if os.path.isfile(__path):
+        import json
+        print("[Debug]", "Loading local GoogleDrive user token")
+        with open(__path, "r") as read_file:
+            token = json.load(read_file)
+    else:
+        token = os.getenv("DRIVE_TOKEN")
+
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
