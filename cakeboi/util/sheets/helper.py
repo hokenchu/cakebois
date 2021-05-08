@@ -44,11 +44,14 @@ class SheetsUser(GoogleUser):
         self.update_cell(today_cell.row, today_cell.col + 10, outcome)
         pass
 
-    def upload(self, list_of_links=[], start=1):
+    def upload(self, list_of_links=None, start=1):
         """
         Adds image links to the same row as today's date
         starting at "start=1"
         """
+        if list_of_links is None:
+            print("[Debug]", "Empty list was passed to sheets.helper.update()")
+            return
         today_cell = self.worksheet.find(today_string())
         for (step, link) in enumerate(list_of_links, start=start):
             self.update_cell(today_cell.row, today_cell.col + step, f'=IMAGE("{link}")')

@@ -16,7 +16,7 @@ DEFAULT_GET_FIELDS = "nextPageToken, files(id, name, mimeType, parents, createdT
 __DRIVE_TOKEN_PATH = r'cakeboi/util/drive/DRIVE_TOKEN.json'
 
 
-def login(cred_json=r"cakeboi/util/drive/client_secrets.json", token=None):
+def login(cred_json=r"cakeboi/util/drive/client_secrets.json"):
     if os.path.isfile(__DRIVE_TOKEN_PATH):
         import json
         print("[Debug]", "Loading local GoogleDrive user token")
@@ -46,18 +46,22 @@ def login(cred_json=r"cakeboi/util/drive/client_secrets.json", token=None):
     return service
 
 
-class DriveUser:
+class DriveUser(GoogleUser):
     def __init__(self, name=None, channel_id=None, drive_id=None):
         GoogleUser.__init__(self, name=name, channel_id=channel_id, drive_id=drive_id)
         self.service = login()
 
-    def upload(self, path_list=[], parent_id=None):
+    def upload(self, path_list=None, parent_id=None):
         """
         Uploads last X images from discord to Drive
 
         Returns list of dict of uploaded files.
         IDs are necessary for GoogleSheets =IMAGE()
         """
+        if path_list is None:
+            print("[Debug]", "Empty list was passed to drive.helper.update()")
+            return
+
         items = []
         if parent_id is None:
             today_folder = self.create_folder()
@@ -76,7 +80,7 @@ class DriveUser:
             parent_id = [parent_id]
 
         if file_name is None:
-            file_name = re.split('[\\/]', path)[-1]
+            file_name = re.split(r'[\\/]', path)[-1]
 
         metadata = {
             'name': file_name,

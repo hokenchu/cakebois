@@ -6,8 +6,6 @@ with open(PATH_TO_SUB_LIST) as f:
     subscriber_list = json.load(f)
 
 
-
-
 def get_subscribers():
     return subscriber_list
 
