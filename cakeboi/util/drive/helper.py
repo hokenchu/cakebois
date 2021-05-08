@@ -14,14 +14,14 @@ from cakeboi.util.common.user import GoogleUser
 
 DEFAULT_GET_FIELDS = "nextPageToken, files(id, name, mimeType, parents, createdTime)"
 
-__path = r'cakeboi/util/drive/token.json'
+__DRIVE_TOKEN_PATH = r'cakeboi/util/drive/DRIVE_TOKEN.json'
 
 
 def login(cred_json=r"cakeboi/util/drive/client_secrets.json", token=None):
-    if os.path.isfile(__path):
+    if os.path.isfile(__DRIVE_TOKEN_PATH):
         import json
         print("[Debug]", "Loading local GoogleDrive user token")
-        with open(__path, "r") as read_file:
+        with open(__DRIVE_TOKEN_PATH, "r") as read_file:
             token = json.load(read_file)
     else:
         token = os.getenv("DRIVE_TOKEN")

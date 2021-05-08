@@ -9,14 +9,16 @@ client = discord.Client()
 
 __SUBSCRIBER_LIST = None
 
+__BOT_TOKEN_PATH = r'./token.txt'
+
 
 def run():
     global __SUBSCRIBER_LIST
     __SUBSCRIBER_LIST = [u['channel_id'] for u in user.get_subscribers()]
 
-    if os.path.isfile(r'./token.txt'):
+    if os.path.isfile(__BOT_TOKEN_PATH):
         print("[Debug]", "Loading local discord bot token")
-        with open(r'./token.txt', 'r') as read_file:
+        with open(__BOT_TOKEN_PATH, 'r') as read_file:
             token = read_file.read()
     else:
         token = os.getenv("DISCORD_BOT_TOKEN")
