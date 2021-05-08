@@ -1,6 +1,6 @@
 # private files
-token.txt
-cakeboi/util/drive/token.json
+/DISCORD_BOT_TOKEN.txt
+/cakeboi/util/drive/DRIVE_TOKEN.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -131,4 +131,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
