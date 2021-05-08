@@ -25,6 +25,8 @@ def login(cred_json=r"cakeboi/util/drive/client_secrets.json", token=DRIVE_TOKEN
     # created automatically when the authorization flow completes for the first
     # time.
     _SCOPES = ["https://www.googleapis.com/auth/drive.file"]
+    import json
+    token = json.loads(token)
     cred = Credentials.from_authorized_user_info(token, _SCOPES)
     # If there are no (valid) credentials available, let the user log in.
     if not cred or not cred.valid:
@@ -82,7 +84,7 @@ class DriveUser:
 
     def create_folder(self, folder_name=None, parents=None):
         if folder_name is None:
-            today = datetime.datetime.today() - datetime.timedelta(hours=21)
+            today = datetime.datetime.today() - datetime.timedelta(hours=12)
             folder_name = today.strftime("%a-%d-%b")
 
         if parents is None:
