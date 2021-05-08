@@ -3,13 +3,14 @@
 A **SINoALICE** discord slave for documenting colosseum fights in a Google Sheet
 
 ## What does this bot do?
-
 Parses information from discord chat
 
+The Magic | How
+:-----------|-------------------------
+Upload screenshots from discord chat into a Google spreadsheet | `!upload` 
+Write extra text information from discord chat into specific cells of the spreadsheet |`!comment`
+Differentiate between servers/channels/users and use their respective spreadsheet for commands | _auto_
 
-1. Upload screenshots from discord chat into a Google spreadsheet (`!upload`)
-2. Write text information from discord chat into specific cells of the spreadsheet (`!comment`)
-3. Differentiate between servers/channels/users and use their respective spreadsheet for commands
 
 ## How does it do that?
 
@@ -33,9 +34,8 @@ Contact the owner **Hok#2123** on **Discord**.
 
 
 ## To-do
-- Missing
-    - Remove local files after upload
-    - Clear some messages after command
-    
+- Remove residual files after upload
+- Clear some messages after command
+
 - Commands
     - Add user/channel/sheet/drive
