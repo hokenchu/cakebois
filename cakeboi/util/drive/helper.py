@@ -10,24 +10,29 @@ from googleapiclient.http import MediaFileUpload
 
 from cakeboi.util.common.user import GoogleUser
 
-# If modifying these scopes, delete the file token.json.
 
 DEFAULT_GET_FIELDS = "nextPageToken, files(id, name, mimeType, parents, createdTime)"
 
-# with open('cakeboi/util/drive/token.json', "r") as read_file:
-#     DRIVE_TOKEN = json.load(read_file)
-
-DRIVE_TOKEN = os.getenv("DRIVE_TOKEN")
+__DRIVE_TOKEN_PATH = r'cakeboi/util/drive/DRIVE_TOKEN.json'
 
 
-def login(cred_json=r"cakeboi/util/drive/client_secrets.json", token=DRIVE_TOKEN):
+def login(cred_json=r"cakeboi/util/drive/client_secrets.json", token=None):
+    if os.path.isfile(__DRIVE_TOKEN_PATH):
+        import json
+        print("[Debug]", "Loading local GoogleDrive user token")
+        with open(__DRIVE_TOKEN_PATH, "r") as read_file:
+            token = json.load(read_file)
+    else:
+        token = os.getenv("DRIVE_TOKEN")
+
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
     _SCOPES = ["https://www.googleapis.com/auth/drive.file"]
     import json
-    token = json.loads(token)
+    token = json.load(token)
     cred = Credentials.from_authorized_user_info(token, _SCOPES)
+
     # If there are no (valid) credentials available, let the user log in.
     if not cred or not cred.valid:
         if cred and cred.expired and cred.refresh_token:

@@ -1,12 +1,11 @@
 import json
 
-# This needs to run when
-# "from cakeboi.util.common.user import GoogleUser"
-# is run
 PATH_TO_SUB_LIST = r'cakeboi/subscriber_list.json'
 with open(PATH_TO_SUB_LIST) as f:
+    print("[Debug]", f"Loading user list from {PATH_TO_SUB_LIST}")
     subscriber_list = json.load(f)
-    print(f"Loaded user list from {PATH_TO_SUB_LIST}")
+
+
 
 
 def get_subscribers():

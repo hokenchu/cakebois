@@ -1,20 +1,29 @@
-# Work with Python 3.6
 import os
 
 import discord
-from discord.ext import tasks
-from cakeboi.util.common import user
-from cakeboi.bot import commands
 
-# Initial setup
-__TOKEN = "ODQwNzEwOTIxNzkzNjk5ODgw.YJcLDw.72BKth06GHS2JaQJ7IpnUpe1-7s"
+from cakeboi.bot import commands
+from cakeboi.util.common import user
+
 client = discord.Client()
 
-__SUBSCRIBER_LIST = [u['channel_id'] for u in user.get_subscribers()]
+__SUBSCRIBER_LIST = None
+
+__BOT_TOKEN_PATH = r'./token.txt'
 
 
 def run():
-    client.run(__TOKEN)
+    global __SUBSCRIBER_LIST
+    __SUBSCRIBER_LIST = [u['channel_id'] for u in user.get_subscribers()]
+
+    if os.path.isfile(__BOT_TOKEN_PATH):
+        print("[Debug]", "Loading local discord bot token")
+        with open(__BOT_TOKEN_PATH, 'r') as read_file:
+            token = read_file.read()
+    else:
+        token = os.getenv("DISCORD_BOT_TOKEN")
+
+    client.run(token)
 
 
 @client.event

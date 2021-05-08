@@ -1,8 +1,18 @@
 import os
 
 TMP_FOLDER = r"./tmp"
-if not os.path.isdir(TMP_FOLDER):
-    os.makedirs(TMP_FOLDER)
+import shutil
+
+if os.path.isdir(TMP_FOLDER):
+    shutil.rmtree(TMP_FOLDER)
+os.makedirs(TMP_FOLDER)
+
+
+def empty_tmp():
+    import shutil
+    shutil.rmtree(TMP_FOLDER)
+    if not os.path.isdir(TMP_FOLDER):
+        os.makedirs(TMP_FOLDER)
 
 
 def get_tmp():
@@ -28,11 +38,3 @@ def get_path(channel=None, channel_id=None):
     if channel is None and channel_id is None:
         raise ValueError("Expected at least one parameter")
     return f"{TMP_FOLDER}/{channel.id or channel_id}"
-
-
-def empty_tmp():
-     print("Temporary folder cleaned")
-     import shutil
-     shutil.rmtree(TMP_FOLDER)
-     if not os.path.isdir(TMP_FOLDER):
-         os.makedirs(TMP_FOLDER)

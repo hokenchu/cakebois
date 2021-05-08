@@ -35,6 +35,7 @@ async def cmd(message):
 # !help
 async def cmd_help(message):
     command_list = """```
+!waifu
 !upload guildname result
 !purge n
 !comment text
@@ -99,7 +100,7 @@ async def upload(message):
 
     user.guildnaming(guild_name)
 
-    local.empty.temp()
+    local.empty_tmp()
 
     hist = await message.channel.history(limit=10).flatten()
 
