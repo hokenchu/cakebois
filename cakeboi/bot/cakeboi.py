@@ -7,7 +7,7 @@ from cakeboi.util.common import user
 from cakeboi.bot import commands
 
 # Initial setup
-__TOKEN = os.getenv("DISCORD_BOT_TOKEN")
+__TOKEN = os.getenv("ODQwNzEwOTIxNzkzNjk5ODgw.YJcLDw.72BKth06GHS2JaQJ7IpnUpe1-7s")
 client = discord.Client()
 
 __SUBSCRIBER_LIST = [u['channel_id'] for u in user.get_subscribers()]

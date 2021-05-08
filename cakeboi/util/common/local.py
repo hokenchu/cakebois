@@ -30,7 +30,7 @@ def get_path(channel=None, channel_id=None):
     return f"{TMP_FOLDER}/{channel.id or channel_id}"
 
 
- def empty_tmp():
+def empty_tmp():
      print("Temporary folder cleaned")
      import shutil
      shutil.rmtree(TMP_FOLDER)
