@@ -93,7 +93,7 @@ class DriveUser(GoogleUser):
 
     def create_folder(self, folder_name=None, parents=None):
         if folder_name is None:
-            today = datetime.datetime.today() - datetime.timedelta(hours=12)
+            today = datetime.datetime.today() - datetime.timedelta(hours=19)
             folder_name = today.strftime("%a-%d-%b")
 
         if parents is None:
