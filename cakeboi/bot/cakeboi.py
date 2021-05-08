@@ -9,7 +9,7 @@ client = discord.Client()
 
 __SUBSCRIBER_LIST = None
 
-__BOT_TOKEN_PATH = r'./token.txt'
+__BOT_TOKEN_PATH = r'./DISCORD_BOT_TOKEN.txt'
 
 
 def run():

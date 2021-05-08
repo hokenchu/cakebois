@@ -29,8 +29,6 @@ def login(cred_json=r"cakeboi/util/drive/client_secrets.json"):
     # created automatically when the authorization flow completes for the first
     # time.
     _SCOPES = ["https://www.googleapis.com/auth/drive.file"]
-    import json
-    token = json.load(token)
     cred = Credentials.from_authorized_user_info(token, _SCOPES)
 
     # If there are no (valid) credentials available, let the user log in.
