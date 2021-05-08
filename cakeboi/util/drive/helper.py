@@ -10,7 +10,6 @@ from googleapiclient.http import MediaFileUpload
 
 from cakeboi.util.common.user import GoogleUser
 
-# If modifying these scopes, delete the file token.json.
 
 DEFAULT_GET_FIELDS = "nextPageToken, files(id, name, mimeType, parents, createdTime)"
 
