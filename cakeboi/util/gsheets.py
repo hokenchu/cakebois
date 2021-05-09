@@ -71,4 +71,4 @@ class SheetsUser(GoogleUser):
 def today_string():
     """ Returns the TODAY in the right format for worksheet.find() """
     today = datetime.today() - timedelta(hours=19)
-    return today.strftime("%a-%d-%b")
+    return today.strftime("%d-%b-%Y")

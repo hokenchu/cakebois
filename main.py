@@ -6,8 +6,7 @@ if __name__ == '__main__':
     validate_users.run()
     from cakeboi.util import gdrive
 
-    gdrive.create_token()
+    u = gdrive.DriveUser(name="Realm")
+    u.get_folders()
 
-    # u = gdrive.DriveUser(name="Realm")
-
-    # cakeboi.run()
+    cakeboi.run()
