@@ -20,7 +20,7 @@ def create_token():
     client_secret = local.get_token('oauth')  # dict/json format
 
     flow = InstalledAppFlow.from_client_config(
-        client_secret, ["https://www.googleapis.com/auth/drive.file"])
+        client_secret, ["https://www.googleapis.com/auth/drive"])
     creds = flow.run_local_server(port=0)
 
     print(creds.to_json())
@@ -38,7 +38,7 @@ def login(token=None, client_secret=None):
     client_secret = local.get_token('oauth')  # dict/json format
     creds = None
 
-    _SCOPES = ["https://www.googleapis.com/auth/drive.file"]
+    _SCOPES = ["https://www.googleapis.com/auth/drive"]
     if token:
         creds = Credentials.from_authorized_user_info(token, _SCOPES)
 
@@ -124,8 +124,7 @@ class DriveUser(GoogleUser):
         """
         # If no folder name passed, make it current day
         if folder_name is None:
-            today = datetime.datetime.today() - datetime.timedelta(hours=19)
-            folder_name = today.strftime("%a-%d-%b")
+            folder_name = today_string()
 
         # Defaults to a drive folder specific to the channel/user
         if parents is None:
