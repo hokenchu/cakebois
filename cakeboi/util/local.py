@@ -16,6 +16,9 @@ def get_token(key):
     else:
         key_string = os.getenv('keys')
 
+    if key_string is None:
+        raise RuntimeError("NO KEYFILE FOUND")
+
     import json
     key_dict = json.loads(key_string)
 
