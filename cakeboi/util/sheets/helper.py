@@ -9,6 +9,9 @@ from cakeboi.util.common.user import GoogleUser
 
 
 def login(json_path="cakeboi/util/sheets/discord_cakeboi.json"):
+    """
+    Logs the user in and returns a service resource object
+    """
     scope = ['https://www.googleapis.com/auth/spreadsheets',
              "https://www.googleapis.com/auth/drive.file",
              "https://www.googleapis.com/auth/drive",
@@ -39,7 +42,10 @@ class SheetsUser(GoogleUser):
         today_cell = self.worksheet.find(today_string())
         self.update_cell(today_cell.row, today_cell.col + 13, your_text)
 
-    def outcome(self, outcome='n/a'):
+    def set_outcome(self, outcome='n/a'):
+        """
+        Sets outcome for today's battle
+        """
         today_cell = self.worksheet.find(today_string())
         self.update_cell(today_cell.row, today_cell.col + 10, outcome)
         pass
@@ -56,7 +62,7 @@ class SheetsUser(GoogleUser):
         for (step, link) in enumerate(list_of_links, start=start):
             self.update_cell(today_cell.row, today_cell.col + step, f'=IMAGE("{link}")')
 
-    def guildnaming(self, guild_name):
+    def set_guildname(self, guild_name):
         today_cell = self.worksheet.find(today_string())
         self.update_cell(today_cell.row, today_cell.col - 1, guild_name)
         pass

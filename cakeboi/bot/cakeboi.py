@@ -70,19 +70,15 @@ async def on_message(message):
         Blocks from unsubscribed channels.
         Print()s can be omitted.  
         """
-        try:
-            # print(f"[Info][Server:{message.guild.name} > Ch:{message.channel.name} > {message.author}] no subscription")
-            pass
-        except:
-            pass
         return  # stops here
 
     print(
-        f"[Info] New message in {message.guild.name}>{message.channel.name or 'DM'}>{message.author} '{message.content[:80]}'")
+        f"[Info] New message in {message.guild.name}>{message.channel.name or 'DM'}>{message.author}: '{message.content[:80]}'")
 
     if message.content.startswith(commands.get_prefix()):
         await commands.cmd(message)
 
+    # command to test connectivity
     if message.content in ["ping",
                            f"{commands.get_prefix()}ping",
                            "hello",

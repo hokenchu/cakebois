@@ -11,6 +11,16 @@ def get_subscribers():
 
 
 class GoogleUser:
+    """
+    A user object that combines and keeps track of
+    - Google Sheets spreadsheet ID
+    - Google Drive folder ID
+    - Discord Channel ID
+    - and some arbitrary username
+
+    Loads its information from subscriber_list file
+    """
+
     def __init__(self, name=None, channel_id=None, sheet_id=None, drive_id=None):
         match = None
         if name:
