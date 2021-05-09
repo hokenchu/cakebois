@@ -1,6 +1,6 @@
 
 
-# Cakeboi <img src="placeholder.png" alt="placeholder" style="zoom: 20%;" /> 
+# Cakeboi <img src="placeholder.png" alt="image_file" width='100px' height='100px' /> 
 A **SINoALICE** discord slave for documenting colosseum fights in a Google Sheet
 
 ## What does this bot do?
