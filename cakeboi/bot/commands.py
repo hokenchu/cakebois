@@ -199,7 +199,15 @@ async def comment(message):
 
 async def waifu(message):
     # Fun
-    await message.channel.send(file=discord.File(r"../waifus/waifu.png"))
+    import os
+    import random
+
+    path = r'waifus'
+
+    pics = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+    random_pic = pics[random.randint(0, len(pics) - 1)]
+    file = os.path.join(path, random_pic)
+    await message.channel.send(file=discord.File(file))
 
 
 async def prefix(message):
