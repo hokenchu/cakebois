@@ -1,6 +1,7 @@
-<img src="https://discord.com/assets/41484d92c876f76b20c7f746221e8151.svg" alt="discord_logo" width="100" height="100" /> <img src="index.png" alt="sinoaliceLogo" width="80" height="80" />
+<img src="C:\Data\Projects\Py\cakebois\placeholder.png" alt="placeholder" style="zoom:50%;" />
 
 # Cakeboi
+
  A **SINoALICE** discord slave for documenting colosseum fights in a Google Sheet
 
 ## What does this bot do?
