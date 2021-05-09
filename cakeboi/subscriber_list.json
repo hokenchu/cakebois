@@ -1,14 +1,20 @@
 [
   {
-    "name": "SvH-panda",
+    "name": "Panda",
+    "channel_id": "839884308886192138",
+    "sheet_id": "1hW_kzaE7jOYKCiJ_1DkuBFXo_s69EE4DPaBBMALfwes",
+    "drive_id": "1jXeZryb2eCnrLWG4pwNdpBM8WiZzEfaq"
+  },
+  {
+    "name": "Realm",
+    "channel_id": "839712261550637066",
+    "sheet_id": "13s5uKbckkf4vCNcdLEWRMKfcG9H-Io8Co4x7PhRksmk",
+    "drive_id": "1Oqy207D9nQzfQMcbQOGkZIx8Et08Zb6W"
+  },
+  {
+    "name": "SvH-cbest",
     "channel_id": "837676563583336461",
     "sheet_id": "1TrOs4qGYzEejpDfWpIjCPPAF3FLznULbWjgnRUxOfxY",
     "drive_id": "1v_wt2_xbkIoV_Dz4cpkIbzhROuVbIjIh"
-  },
-  {
-    "name": "SvH-realm",
-    "channel_id": "838962053556994048",
-    "sheet_id": "1TDwkg0RFylSeNOaB9Lfo78dcCl-7Fc8I2lzztOgEAQ4",
-    "drive_id": "1Oqy207D9nQzfQMcbQOGkZIx8Et08Zb6W"
   }
 ]
