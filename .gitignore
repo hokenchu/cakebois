@@ -1,7 +1,5 @@
 # private files
-/private/DISCORD_BOT_TOKEN.txt
-/private/DRIVE_TOKEN.json
-/private/
+keys.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
