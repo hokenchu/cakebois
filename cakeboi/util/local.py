@@ -4,6 +4,24 @@ import shutil
 TMP_FOLDER = r"./tmp"
 
 
+def get_token(key):
+    """
+    Returns token as string if it's a single value or json/dict format
+    """
+    import os
+    if os.path.isfile(r'keys.json'):
+        print("[Debug]", "Loading local discord bot token")
+        with open(r'keys.json', 'r') as read_file:
+            key_string = read_file.read()
+    else:
+        key_string = os.getenv('keys')
+
+    import json
+    key_dict = json.loads(key_string)
+
+    return key_dict[key]
+
+
 def empty_tmp():
     """
     Clears the local tmp folder and creates a new one

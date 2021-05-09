@@ -1,27 +1,20 @@
-import os
-
 import discord
 
 from cakeboi.bot import commands
-from cakeboi.util.common import user
+from cakeboi.util import guser
+from cakeboi.util import local
 
 client = discord.Client()
 
 __SUBSCRIBER_LIST = None
 
-__BOT_TOKEN_PATH = r'./DISCORD_BOT_TOKEN.txt'
 
+def run(token=None):
+    if token is None:
+        token = local.get_token('bot')
 
-def run():
     global __SUBSCRIBER_LIST
-    __SUBSCRIBER_LIST = [u['channel_id'] for u in user.get_subscribers()]
-
-    if os.path.isfile(__BOT_TOKEN_PATH):
-        print("[Debug]", "Loading local discord bot token")
-        with open(__BOT_TOKEN_PATH, 'r') as read_file:
-            token = read_file.read()
-    else:
-        token = os.getenv("DISCORD_BOT_TOKEN")
+    __SUBSCRIBER_LIST = [u['channel_id'] for u in guser.get_subscribers()]
 
     client.run(token)
 

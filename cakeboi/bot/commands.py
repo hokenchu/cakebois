@@ -1,8 +1,8 @@
 import discord
 
-from cakeboi.util.common import local
-from cakeboi.util.drive.helper import DriveUser
-from cakeboi.util.sheets.helper import SheetsUser, today_string
+from cakeboi.util import local
+from cakeboi.util.gdrive import DriveUser
+from cakeboi.util.gsheets import SheetsUser, today_string
 
 __PREFIX = '!'
 

@@ -1,6 +1,7 @@
 # private files
-/DISCORD_BOT_TOKEN.txt
-/cakeboi/util/drive/DRIVE_TOKEN.json
+/private/DISCORD_BOT_TOKEN.txt
+/private/DRIVE_TOKEN.json
+/private/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

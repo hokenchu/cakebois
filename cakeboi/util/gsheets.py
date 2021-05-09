@@ -4,11 +4,11 @@ from datetime import datetime, timedelta
 import gspread
 # authentication packages, for "Login"
 from oauth2client.service_account import ServiceAccountCredentials
+from cakeboi.util import local
+from cakeboi.util.guser import GoogleUser
 
-from cakeboi.util.common.user import GoogleUser
 
-
-def login(json_path="cakeboi/util/sheets/discord_cakeboi.json"):
+def login(sheets_token=None):
     """
     Logs the user in and returns a service resource object
     """
@@ -16,8 +16,8 @@ def login(json_path="cakeboi/util/sheets/discord_cakeboi.json"):
              "https://www.googleapis.com/auth/drive.file",
              "https://www.googleapis.com/auth/drive",
              "https://spreadsheets.google.com/feeds"]
-
-    cred = ServiceAccountCredentials.from_json_keyfile_name(json_path, scope)
+    token = local.get_token('sheets_token')
+    cred = ServiceAccountCredentials.from_json_keyfile_dict(token, scope)
     user = gspread.authorize(cred)
 
     return user

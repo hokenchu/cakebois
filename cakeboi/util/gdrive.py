@@ -1,6 +1,4 @@
 import datetime
-import json
-import os
 import re
 
 from google.auth.transport.requests import Request
@@ -9,44 +7,37 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
-from cakeboi.util.common.user import GoogleUser
+from cakeboi.util import local
+from cakeboi.util.guser import GoogleUser
 
 DEFAULT_GET_FIELDS = "nextPageToken, files(id, name, mimeType, parents, createdTime)"
 
-__DRIVE_TOKEN_PATH = r'cakeboi/util/drive/DRIVE_TOKEN.json'
 
-
-def login(cred_json=r"cakeboi/util/drive/client_secrets.json"):
+def login(token=None, client_secret=None):
     """
     Logs the user in and returns a service resource object
     """
-
-    # Checks whether we're in local environment or replit
-    if os.path.isfile(__DRIVE_TOKEN_PATH):
-        # local
-        # loads from local json file
-        print("[Debug]", "Loading local GoogleDrive user token")
-        with open(__DRIVE_TOKEN_PATH, "r") as read_file:
-            token = json.load(read_file)
-    else:
-        # replit
-        # loads from json string from system environment
-        token = os.getenv("DRIVE_TOKEN")
-        token = json.loads(token)
+    token = local.get_token("drive_token")  # dict/json format
+    client_secret = local.get_token('oauth')  # dict/json format
+    creds = None
 
     _SCOPES = ["https://www.googleapis.com/auth/drive.file"]
-    cred = Credentials.from_authorized_user_info(token, _SCOPES)
+    if token:
+        creds = Credentials.from_authorized_user_info(token, _SCOPES)
 
-    # If there are no (valid) credentials available, let the user log in. (Click http link)
-    if not cred or not cred.valid:
-        if cred and cred.expired and cred.refresh_token:
-            cred.refresh(Request())
+    # If there are no (valid) credentials available, let the user log in.
+    # Click http link
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                cred_json, _SCOPES)
-            cred = flow.run_local_server(port=0)
+            # cred_json = ""
+            flow = InstalledAppFlow.from_client_config(
+                client_secret, _SCOPES)
+            creds = flow.run_local_server(port=0)
+            print(creds.to_json())
 
-    service = build('drive', 'v3', credentials=cred)
+    service = build('drive', 'v3', credentials=creds)
     return service
 
 
