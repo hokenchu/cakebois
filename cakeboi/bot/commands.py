@@ -203,6 +203,7 @@ async def comment(message):
         try:
             date = datetime.datetime.strptime(args[1], '%d-%b-%Y').strftime('%d-%b-%Y')
             args.pop(1)
+
             await message.channel.send(f"Uploading to `{date}`")
         except ValueError:
             await message.channel.send(f"{args[1]} was in an unexpected format")
@@ -212,7 +213,7 @@ async def comment(message):
         date = today_string()
 
     text = ' '.join(args[1:])
-    print("text")
+
     # Confirmation message
     await message.channel.send("Comment for the **" + date + "**" + " will be " + "\"" + text + "\"")
 
