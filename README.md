@@ -1,6 +1,7 @@
-# Cakeboi <img src="https://discord.com/assets/41484d92c876f76b20c7f746221e8151.svg" alt="discord_logo" width="50" height="50" />
+<img src="https://discord.com/assets/41484d92c876f76b20c7f746221e8151.svg" alt="discord_logo" width="100" height="100" /> <img src="index.png" alt="sinoaliceLogo" width="80" height="80" />
 
-A **SINoALICE** discord slave for documenting colosseum fights in a Google Sheet
+# Cakeboi
+ A **SINoALICE** discord slave for documenting colosseum fights in a Google Sheet
 
 ## What does this bot do?
 Parses information from discord chat
@@ -10,6 +11,7 @@ The Magic | How
 Upload screenshots from discord chat into a Google spreadsheet | `!upload` 
 Write extra text information from discord chat into specific cells of the spreadsheet |`!comment`
 Differentiate between servers/channels/users and use their respective spreadsheet for commands | _auto_
+lol | `!waifu` 
 
 
 ## How does it do that?
