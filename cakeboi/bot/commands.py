@@ -178,7 +178,7 @@ async def upload(message):
 
     # Uploads image links to google spread sheet
     sheets_user = SheetsUser(channel_id=message.channel.id)
-    sheets_user.upload(list_of_links=link_list)
+    sheets_user.upload(list_of_links=link_list,date=date)
 
     # Confirmation message in channel
     await message.channel.send(f"Sent {len(link_list)} images to {sheets_user.sheet_id}")
