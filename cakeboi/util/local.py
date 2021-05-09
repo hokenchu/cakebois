@@ -25,14 +25,14 @@ def get_token(key):
     return key_dict[key]
 
 
-def empty_tmp():
+def empty_folder(path=TMP_FOLDER):
     """
     Clears the local tmp folder and creates a new one
     """
-    if os.path.isdir(TMP_FOLDER):
-        shutil.rmtree(TMP_FOLDER)
+    if os.path.isdir(path):
+        shutil.rmtree(path)
 
-    os.makedirs(TMP_FOLDER)
+    os.makedirs(path)
 
 
 def get_tmp():
@@ -70,4 +70,4 @@ def get_path(channel=None, channel_id=None):
 
 
 # Initial cleanup of residual files in tmp folder
-empty_tmp()
+empty_folder()

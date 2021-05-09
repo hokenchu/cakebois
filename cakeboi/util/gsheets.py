@@ -42,29 +42,35 @@ class SheetsUser(GoogleUser):
         today_cell = self.worksheet.find(today_string())
         self.update_cell(today_cell.row, today_cell.col + 13, your_text)
 
-    def set_outcome(self, outcome='n/a'):
+    def set_outcome(self, outcome='n/a', date=None):
         """
         Sets outcome for today's battle
         """
-        today_cell = self.worksheet.find(today_string())
-        self.update_cell(today_cell.row, today_cell.col + 10, outcome)
+        if date is None:
+            date = today_string()
+        target_cell = self.worksheet.find(date)
+        self.update_cell(target_cell.row, target_cell.col + 10, outcome)
         pass
 
-    def upload(self, list_of_links=None, start=1):
+    def upload(self, list_of_links=None, start=1, date=None):
         """
         Adds image links to the same row as today's date
         starting at "start=1"
         """
+        if date is None:
+            date = today_string()
         if list_of_links is None:
             print("[Debug]", "Empty list was passed to sheets.helper.update()")
             return
-        today_cell = self.worksheet.find(today_string())
+        target_cell = self.worksheet.find(date)
         for (step, link) in enumerate(list_of_links, start=start):
-            self.update_cell(today_cell.row, today_cell.col + step, f'=IMAGE("{link}")')
+            self.update_cell(target_cell.row, target_cell.col + step, f'=IMAGE("{link}")')
 
-    def set_guildname(self, guild_name):
-        today_cell = self.worksheet.find(today_string())
-        self.update_cell(today_cell.row, today_cell.col - 1, guild_name)
+    def set_guildname(self, guild_name, date=None):
+        if date is None:
+            date = today_string()
+        target_cell = self.worksheet.find(date)
+        self.update_cell(target_cell.row, target_cell.col - 1, guild_name)
         pass
 
 

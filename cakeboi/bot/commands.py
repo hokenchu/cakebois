@@ -1,8 +1,11 @@
+import datetime
+import re
+
 import discord
 
 from cakeboi.util import local
 from cakeboi.util.gdrive import DriveUser
-from cakeboi.util.gsheets import SheetsUser, today_string
+from cakeboi.util.gsheets import SheetsUser
 
 __PREFIX = '!'
 
@@ -94,14 +97,25 @@ async def upload(message):
                                    "\n\nExample: !upload Peanut Win```")
         return
 
+    # Check for date argument
+    date = None
+    if re.match(r'\d{2}-\w{3}-20\d{2}', args[1]):
+        try:
+            date = datetime.datetime.strptime(args[1], '%d-%b-%Y').strftime('%d-%b-%Y')
+            args.pop(1)
+            await message.channel.send(f"Uploading to `{date}`")
+        except ValueError:
+            await message.channel.send(f"{args[1]} was in an unexpected format")
+            return
+
     # Login as google sheet user
     sheets_user = SheetsUser(channel_id=message.channel.id)
 
     # Set win/lose in sheet
     if args[-1] in ["Lose", "lose", "Defeat", "defeat"]:
-        sheets_user.set_outcome("Lose")
+        sheets_user.set_outcome(outcome="Lose", date=date)
     elif args[-1] in ["Win", "win", "Victory", "victory"]:
-        sheets_user.set_outcome("Win")
+        sheets_user.set_outcome(outcome="Win", date=date)
     else:
         await message.channel.send("Missing battle outcome! (win/lose)"
                                    "\n\n```Example: !upload Peanut Win```"
@@ -112,7 +126,7 @@ async def upload(message):
     # Set enemy guild name in sheet
     separator = ' '
     guild_name = separator.join(args[1:-1])
-    sheets_user.set_guildname(guild_name)
+    sheets_user.set_guildname(guild_name=guild_name, date=date)
 
     # Histories are sorted by latest first.
     # Reverse that for the correct chronological order
@@ -127,7 +141,7 @@ async def upload(message):
             print(att)
 
     # Clear local tmp folder before download
-    local.empty_tmp()
+    local.empty_folder(local.get_path(channel=message.channel))
 
     # list of (soon to be) local files
     # pass this to google drive user
@@ -145,7 +159,7 @@ async def upload(message):
     drive_user = DriveUser(channel_id=message.channel.id)
 
     # creates new folder for that day and saves reference
-    folder = drive_user.create_folder()
+    folder = drive_user.create_folder(folder_name=date)
 
     # clears folder of any residual files
     drive_user.clear_folder(folder["id"])
@@ -184,12 +198,23 @@ async def comment(message):
                                    "\n\nExample: !comment We got lubed by Peanut```")
         return
 
-    # takes the text after the (index8) 9th character => text after "!comment "
-    text = message.content
-    text = text[9:]
+    # Check for date argument
+    if re.match(r'\d{2}-\w{3}-20\d{2}', args[1]):
+        try:
+            date = datetime.datetime.strptime(args[1], '%d-%b-%Y').strftime('%d-%b-%Y')
+            args.pop(1)
+            await message.channel.send(f"Uploading to `{date}`")
+        except ValueError:
+            await message.channel.send(f"{args[1]} was in an unexpected format")
+            return
+    else:
+        from cakeboi.util.gsheets import today_string
+        date = today_string()
+
+    text = ' '.join(args[1:])
 
     # Confirmation message
-    await message.channel.send("Comment for the **" + today_string() + "**" + " will be " + "\"" + text + "\"")
+    await message.channel.send("Comment for the **" + date + "**" + " will be " + "\"" + text + "\"")
 
     # Logs into google sheets user and posts comment
     sheets_user = SheetsUser(channel_id=message.channel.id)
