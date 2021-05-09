@@ -13,6 +13,23 @@ from cakeboi.util.guser import GoogleUser
 DEFAULT_GET_FIELDS = "nextPageToken, files(id, name, mimeType, parents, createdTime)"
 
 
+def create_token():
+    """
+    Logs the user in and returns a service resource object
+    """
+    client_secret = local.get_token('oauth')  # dict/json format
+
+    flow = InstalledAppFlow.from_client_config(
+        client_secret, ["https://www.googleapis.com/auth/drive.file"])
+    creds = flow.run_local_server(port=0)
+
+    print(creds.to_json())
+    with open('new_drive_token.json', 'w') as token:
+        token.write(creds.to_json())
+
+    service = build('drive', 'v3', credentials=creds)
+
+
 def login(token=None, client_secret=None):
     """
     Logs the user in and returns a service resource object
