@@ -35,12 +35,14 @@ class SheetsUser(GoogleUser):
         """
         self.worksheet.update_cell(row, col, text)
 
-    def comment(self, your_text="<no comment>"):
+    def comment(self, your_text="<no comment>", date = None):
         """
         Adds comment in the same row as today's date
         """
-        today_cell = self.worksheet.find(today_string())
-        self.update_cell(today_cell.row, today_cell.col + 13, your_text)
+        if date is None:
+            date = today_string()
+        target_cell = self.worksheet.find(date)
+        self.update_cell(target_cell.row, target_cell.col + 13, your_text)
 
     def set_outcome(self, outcome='n/a', date=None):
         """

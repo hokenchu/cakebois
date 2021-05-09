@@ -212,13 +212,13 @@ async def comment(message):
         date = today_string()
 
     text = ' '.join(args[1:])
-
+    print("text")
     # Confirmation message
     await message.channel.send("Comment for the **" + date + "**" + " will be " + "\"" + text + "\"")
 
     # Logs into google sheets user and posts comment
     sheets_user = SheetsUser(channel_id=message.channel.id)
-    sheets_user.comment(text)
+    sheets_user.comment(your_text=text,date=date)
     return
 
 
